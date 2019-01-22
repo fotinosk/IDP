@@ -4,18 +4,7 @@
 //Includes
 #include "Arduino.h"
 
-//any init functions for sense go here
-
 //Function Declaration
-int readhall();
+void initSense();
 
-//Function Definitions
-void initSense() {
-  //Initialise pins to use for sensors
-  return;
-}
-
-int readhall() {
-  return 5;
-}
 #endif
