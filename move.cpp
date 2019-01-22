@@ -7,37 +7,48 @@
 
 //Variable Definitions
 Adafruit_MotorShield motorShield;// = Adafruit_MotorShield();
-Adafruit_DCMotor *motor1;// = motorShield.getMotor(1);
-Adafruit_DCMotor *motor2;// = motorShield.getMotor(2);
+Adafruit_DCMotor *motorRight;// = motorShield.getMotor(1);
+Adafruit_DCMotor *motorLeft;// = motorShield.getMotor(2);
 
 
 //Function Definitions
 void initMove() {
   motorShield = Adafruit_MotorShield();
-  motor1 = motorShield.getMotor(1);
-  motor2 = motorShield.getMotor(2);
-  motorShield.begin();
+  motorRight = motorShield.getMotor(1);
+  motorLeft = motorShield.getMotor(2);
+  motorShield.begin(); //could put in desired frequency for PWM here. Default 1.6 KHz
   return;
 }
 
-void forward(int spd) {
-  //Set speed to start motor at
-  motor1->setSpeed(spd);
-  motor2->setSpeed(spd);
-  motor1->run(FORWARD);
-  motor2->run(FORWARD);
+void spinRight(int spd) {
+  motorRight->setSpeed((int16_t) spd*255/100);
+  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
 
-void backward(int spd) {
-  motor1->setSpeed(spd);
-  motor2->setSpeed(spd);
-  motor1->run(BACKWARD);
-  motor2->run(BACKWARD);
+void spinLeft(int spd) {
+  motorLeft->setSpeed((int16_t) spd*255/100);
+  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
 
+void spinBoth(int spd) {
+  motorRight->setSpeed((int16_t) spd*255/100);
+  motorLeft->setSpeed((int16_t) spd*255/100);
+  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
+  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
+}
 
-void turn(int spd, int COR) {
-  return;
+void wallRight(int spd) {
+  motorRight->setSpeed((int16_t) spd*255/100*0.95);
+  motorLeft->setSpeed((int16_t) spd*255/100);
+  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
+  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
+}
+
+void wallLeft(int spd) {
+  motorRight->setSpeed((int16_t) spd*255/100);
+  motorLeft->setSpeed((int16_t) spd*255/100*0.95);
+  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
+  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
 }

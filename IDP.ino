@@ -9,18 +9,46 @@
  * Each #include will also require it's initName(); function to be run in setup.
  * 
 */
-
-
+//Add needed includes
 #include "Arduino.h"
 #include "move.h"
 
+//Declare global variables
+int j = 0;
+int i = 0;
+
 void setup() {
-  initMove();  
-  int spd = 16;
-  forward(spd);
+  initMove();
+  spinBoth(0);
 }
 
-
 void loop() {
+  spinBoth(0);
+  spinRight(50);
+  delay(500);
+  spinRight(100);
+  delay(500);
+  spinBoth(0);
+  spinLeft(50);
+  delay(500);
+  spinLeft(100);
+  delay(500);
+  spinBoth(0);
+  spinRight(-50);
+  delay(500);
+  spinRight(-100);
+  delay(500);
+  spinBoth(0);
+  spinLeft(-50);
+  delay(500);
+  spinLeft(-100);
+  delay(500);
+  spinBoth(80);
+  delay(500);
+  spinBoth(-80);
+  delay(500);
+  spinBoth(0);
+  
+  
   
 }

@@ -9,14 +9,24 @@
 
 //Variable Declarations
 extern Adafruit_MotorShield motorShield;
-extern Adafruit_DCMotor *motor1;
-extern Adafruit_DCMotor *motor2;
+extern Adafruit_DCMotor *motorRight;
+extern Adafruit_DCMotor *motorLeft;
 
 //Function Declarations
 void initMove();
-void forward(int spd);
-void backward(int spd);
-void turn(int spd, int COR);
+void spinRight(int spd);
+void spinLeft(int spd);
+void spinBoth(int spd);
+void wallRight(int spd);
+void wallLeft(int spd);
+
+
+//spin right
+//spin left
+//travel wall
+//spin both
+//turn centre, right and left using previous functions
+//travel wall right left
 
 
 #endif /* MOVE_H */
