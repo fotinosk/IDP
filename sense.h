@@ -4,6 +4,8 @@
 //Includes
 #include "Arduino.h"
 
+//any init functions for sense go here
+
 //Function Definitions
 int readhall();
 

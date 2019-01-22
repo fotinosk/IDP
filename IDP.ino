@@ -13,17 +13,15 @@
  *                              and break things.
 */
 
+
 #include "Arduino.h"
 #include "move.h"
 //#include "sense.h"
 
-void blink(int deltime);
-
 void setup() {
-  //setup scope
-  forward(5);
-  backward(5);
-//  int x = readhall();
+  initMove();  
+  int spd = 255;
+  forward(spd);
 }
 
 
