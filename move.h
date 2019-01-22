@@ -8,9 +8,9 @@
 //#include "utility/Adafruit_MS_PWMServoDriver.h" //not sure what this does yet
 
 //Variable Definitions
-extern Adafruit_MotorShield motorShield = Adafruit_MotorShield();
-extern Adafruit_DCMotor *motor1 = motorShield.getMotor(1);
-extern Adafruit_DCMotor *motor2 = motorShield.getMotor(2);
+Adafruit_MotorShield motorShield = Adafruit_MotorShield();
+Adafruit_DCMotor *motor1 = motorShield.getMotor(1);
+Adafruit_DCMotor *motor2 = motorShield.getMotor(2);
 
 //Function Declarations
 void initMove();
