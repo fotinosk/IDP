@@ -18,6 +18,8 @@
 #include "move.h"
 //#include "sense.h"
 
+void initMove();
+
 void setup() {
   initMove();  
   int spd = 255;

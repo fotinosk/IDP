@@ -6,7 +6,16 @@
 
 //any init functions for sense go here
 
-//Function Definitions
+//Function Declaration
 int readhall();
 
+//Function Definitions
+void initSense() {
+  //Initialise pins to use for sensors
+  return;
+}
+
+int readhall() {
+  return 5;
+}
 #endif

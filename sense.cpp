@@ -1,8 +1,1 @@
-void initSense() {
-  //Initialise pins to use for sensors
-  return;
-}
-
-int readhall() {
-  return 5;
-}
+//todo add stuff
