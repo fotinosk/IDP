@@ -1,5 +1,4 @@
-/*Template for .cpp files
- *
+/*
 */
 
 //Include - only the one here. others are in the header file.
