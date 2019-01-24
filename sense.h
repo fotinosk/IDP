@@ -1,10 +1,13 @@
 #ifndef SENSE_H
 #define SENSE_H
 
-//Includes
 #include "Arduino.h"
 
-//Function Declaration
+//Variable Declarations
+int color;
+
+//Function Definitions + other functions that are required
 void initSense();
 
 #endif
+
