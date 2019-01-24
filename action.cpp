@@ -1,4 +1,6 @@
 /* Controlling servos and other 'action' functionality on the robot
+ *  
+ *  The servos turn at 180* in 600ms. Just something to bear in mind
 */
 
 //Include - only the one here. others are in the header file.
@@ -17,14 +19,14 @@ uint8_t sortDiscardPos;
 void initAction() {
 
   //## EDIT GATE POSITIONS in degrees ## \\
-  gateUpPos = 180;
-  gateDownPos = 30;
-  sortKeepPos = 45;
-  sortDiscardPos = 135;
+  gateUpPos = 0;
+  gateDownPos = 180;
+  sortKeepPos = 0;
+  sortDiscardPos = 180;
   
   
   gateServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  sortServo.attach(11);  //the number is the pin. could be 9,10,11,12 tbd
+  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   return;
 }
 

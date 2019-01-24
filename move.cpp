@@ -20,33 +20,33 @@ void initMove() {
   return;
 }
 
-void spinRight(int spd) {
-  motorRight->setSpeed((int16_t) spd*255/100);
+void spinRight(int16_t spd) {
+  motorRight->setSpeed(spd >= 0 ? spd*255/100 : -spd*255/100);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
 
-void spinLeft(int spd) {
-  motorLeft->setSpeed((int16_t) spd*255/100*0.96);
+void spinLeft(int16_t spd) {
+  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.96 : -spd*255/100*0.96);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
 
-void spinBoth(int spd) {
+void spinBoth(int16_t spd) {
   motorRight->setSpeed((int16_t) spd*255/100);
   motorLeft->setSpeed((int16_t) spd*255/100);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
 }
 
-void wallRight(int spd) {
+void wallRight(int16_t spd) {
   motorRight->setSpeed((int16_t) spd*255/100*0.95);
   motorLeft->setSpeed((int16_t) spd*255/100);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
 }
 
-void wallLeft(int spd) {
+void wallLeft(int16_t spd) {
   motorRight->setSpeed((int16_t) spd*255/100);
   motorLeft->setSpeed((int16_t) spd*255/100*0.95);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);

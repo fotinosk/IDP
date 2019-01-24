@@ -14,11 +14,11 @@ extern Adafruit_DCMotor *motorLeft;
 
 //Function Declarations
 void initMove();
-void spinRight(int spd);
-void spinLeft(int spd);
-void spinBoth(int spd);
-void wallRight(int spd);
-void wallLeft(int spd);
+void spinRight(int16_t spd);
+void spinLeft(int16_t spd);
+void spinBoth(int16_t spd);
+void wallRight(int16_t spd);
+void wallLeft(int16_t spd);
 
 
 //spin right
