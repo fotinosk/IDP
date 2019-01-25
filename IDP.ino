@@ -12,24 +12,25 @@
 //Add needed includes
 #include "Arduino.h"
 #include "move.h"
+#include "sense.h"
 
 //Declare global variables
 
 void setup() {
   initMove();
+  initSense();
 }
 
 void loop() {
-spinRight(20);
-delay(1000);
-spinRight(50);
-delay(1000);
-spinRight(100);
-delay(1000);
-spinRight(-20);
-delay(1000);
-spinRight(-50);
-delay(1000);
-spinRight(-100);
-delay(1000);
+  spinBoth(100);
+  /*if (switchFrontLeft() && switchFrontRight) {
+      spinBoth(0);
+      delay(500);
+      spinBoth(-50);
+      delay(1500);
+      spinRight(100);
+      spinLeft(-100);
+      delay(700);       
+  }*/
+
 }

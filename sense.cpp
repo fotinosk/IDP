@@ -2,7 +2,33 @@
 #include "sense.h"
 
 //Variable Definitions
-int color;
+//int color;
+uint8_t switchFrontLeftPin = 1;
+uint8_t switchFrontRightPin = 2;
+uint8_t switchBackLeftPin = 3;
+uint8_t switchBackRightPin = 4;
+
+//Function Definitions
+void initSense() {
+  pinMode(switchFrontLeftPin, INPUT);
+  pinMode(switchFrontRightPin, INPUT);
+  pinMode(switchBackLeftPin, INPUT);
+  pinMode(switchFrontRightPin, INPUT);
+  return;
+}
+
+bool switchFrontLeft() {
+  return digitalRead(switchFrontLeftPin);
+}
+bool switchFrontRight() {
+  return digitalRead(switchFrontRightPin); 
+}
+bool switchBackLeft() {
+  return digitalRead(switchBackLeftPin);
+}
+bool switchBackRight() {
+  return digitalRead(switchBackRightPin);
+}
 
 /*
  * Box Blue 75-85
@@ -11,13 +37,7 @@ int color;
  * Track White 200-215
  * TRack Green 115-120
  */
-
-//Function Definitions
-void initSense() {
-//  globalVariable = whatever;
-  return;
-}
-
+/*
 int LineSensor() {
   int rd = analogRead(A1); 
   delay(100);
@@ -38,3 +58,4 @@ int LineSensor() {
     return 4; 
   }
 }
+*/

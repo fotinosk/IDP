@@ -24,7 +24,7 @@ void initAction() {
   sortKeepPos = 0;
   sortDiscardPos = 180;
   //## EDIT LED PIN ## \\
-  redLEDPin = 1;
+  redLEDPin = 0;
   
  
   gateServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd

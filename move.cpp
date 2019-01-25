@@ -33,14 +33,12 @@ void spinLeft(int16_t spd) {
 }
 
 void spinBoth(int16_t spd) {
-  motorRight->setSpeed((int16_t) spd*255/100);
-  motorLeft->setSpeed((int16_t) spd*255/100);
-  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
-  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
+  spinRight(spd);
+  spinLeft(spd);
 }
 
 void wallRight(int16_t spd) {
-  motorRight->setSpeed((int16_t) spd*255/100*0.95);
+  motorRight->setSpeed((int16_t) spd*255/100*0.97);
   motorLeft->setSpeed((int16_t) spd*255/100);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
@@ -48,7 +46,7 @@ void wallRight(int16_t spd) {
 
 void wallLeft(int16_t spd) {
   motorRight->setSpeed((int16_t) spd*255/100);
-  motorLeft->setSpeed((int16_t) spd*255/100*0.95);
+  motorLeft->setSpeed((int16_t) spd*255/100*0.97);
   motorRight->run(spd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
 }

@@ -21,12 +21,4 @@ void wallRight(int16_t spd);
 void wallLeft(int16_t spd);
 
 
-//spin right
-//spin left
-//travel wall
-//spin both
-//turn centre, right and left using previous functions
-//travel wall right left
-
-
 #endif /* MOVE_H */
