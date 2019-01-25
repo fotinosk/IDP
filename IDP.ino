@@ -22,15 +22,15 @@ void setup() {
 }
 
 void loop() {
-  spinBoth(100);
-  /*if (switchFrontLeft() && switchFrontRight) {
+  wallRight(80);
+  if (switchFrontLeft() && switchFrontRight()) {
       spinBoth(0);
       delay(500);
       spinBoth(-50);
-      delay(1500);
+      delay(420);
       spinRight(100);
       spinLeft(-100);
-      delay(700);       
-  }*/
+      delay(800);       
+  }
 
 }

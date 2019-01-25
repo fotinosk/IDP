@@ -27,7 +27,7 @@ void spinRight(int16_t spd) {
 }
 
 void spinLeft(int16_t spd) {
-  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.96 : -spd*255/100*0.96);
+  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.97 : -spd*255/100*0.97);
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
