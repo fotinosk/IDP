@@ -23,24 +23,31 @@ void initAction() {
   gateDownPos = 180;
   sortKeepPos = 0;
   sortDiscardPos = 180;
+  //## EDIT LED PIN ## \\
+  redLEDPin = 1;
   
-  
+ 
   gateServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
   sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  pinMode(redLEDPin,OUTPUT);
   return;
 }
 
 void sortKeep() {
   sortServo.write(sortKeepPos);
 }
-
 void sortDiscard() {
   sortServo.write(sortDiscardPos);
 }
-
 void gateDown() {
   gateServo.write(gateDownPos);
 }
 void gateUp() {
   gateServo.write(gateUpPos);
+}
+void redLEDOn() {
+  digitalWrite(redLEDPin, HIGH);
+}
+void redLEDOff() {
+  digitalWrite(redLEDPin, LOW);
 }

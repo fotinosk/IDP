@@ -2,7 +2,7 @@
 #include "sense.h"
 
 //Variable Definitions
-
+int color;
 
 /*
  * Box Blue 75-85

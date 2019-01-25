@@ -4,10 +4,9 @@
 #include "Arduino.h"
 
 //Variable Declarations
-int color;
+extern int color;
 
 //Function Definitions + other functions that are required
 void initSense();
 
 #endif
-
