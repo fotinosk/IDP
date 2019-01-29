@@ -7,44 +7,40 @@
 #include "action.h"
 
 //Variable Definitions
-Servo frontServo;
-Servo backServo;
-uint8_t gateUpPos;
-uint8_t gateDownPos;
-uint8_t sortKeepPos;
-uint8_t sortDiscardPos;
+Servo sortServo;
+Servo flapServo;
+uint8_t flapRightPos = 50;
+uint8_t flapLeftPos = 130;
+uint8_t sortKeepPos = 160;
+uint8_t sortDiscardPos = 50;
 uint8_t redLEDPin;
 
 
 //Function Definitions + all other function definitions
 void initAction() {
 
-  //## EDIT GATE POSITIONS in degrees ## \\
-  gateUpPos = 0;
-  gateDownPos = 180;
-  sortKeepPos = 0;
-  sortDiscardPos = 180;
+
   //## EDIT LED PIN ## \\
   redLEDPin = 0;
   
  
-  frontServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  backServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  sortServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
+  flapServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   return;
 }
 
 void sortKeep() {
-  frontServo.write(sortKeepPos);
+  sortServo.write(sortKeepPos);
 }
 void sortDiscard() {
-  frontServo.write(sortDiscardPos);
+  sortServo.write(sortDiscardPos);
 }
-void gateDown() {
-  backServo.write(gateDownPos);
+void flapRight() {
+  flapServo.write(flapRightPos);
 }
-void gateUp() {
-  backServo.write(gateUpPos);
+void flapLeft() {
+  flapServo.write(flapLeftPos);
 }
 void redLEDOn() {
   digitalWrite(redLEDPin, HIGH);

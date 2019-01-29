@@ -6,10 +6,10 @@
 #include "Servo.h"
 
 //Variable Declarations
-extern Servo frontServo;
-extern Servo backServo;
-extern uint8_t gateUpPos;
-extern uint8_t gateDownPos;
+extern Servo sortServo;
+extern Servo flapServo;
+extern uint8_t flapRightPos;
+extern uint8_t flapLeftPos;
 extern uint8_t sortKeepPos;
 extern uint8_t sortDiscardPos;
 extern uint8_t redLEDPin;
@@ -17,11 +17,11 @@ extern uint8_t redLEDPin;
 
 //Function Definitions
 void initAction();
-//Gates and servos
+//Flaps and servos
+void flapRight();
+void flapLeft();
 void sortKeep();
 void sortDiscard();
-void gateDown();
-void gateUp();
 //Block carrying light
 void redLEDOn();
 void redLEDOff();
