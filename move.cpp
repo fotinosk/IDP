@@ -52,7 +52,6 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
       case NONE: spinWheels(100, 100); break;
       case RIGHTWALL: spinWheels(100,97); break;
       case LEFTWALL: spinWheels(97, 100); break;
-      
     }
   }
   return;

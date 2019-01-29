@@ -24,6 +24,7 @@ using namespace std;
 extern Adafruit_MotorShield motorShield;
 extern Adafruit_DCMotor *motorRight;
 extern Adafruit_DCMotor *motorLeft;
+extern Adafruit_DCMotor *sliderMotor;
 extern float rTune;
 extern float lTune;
 //extern vector<bool> spinDirection;
@@ -31,6 +32,12 @@ extern float lTune;
 //Function Declarations
 void initMove();
 void spinWheels(int16_t rspd, int16_t lspd);
+<<<<<<< HEAD
+=======
+void breakWheels();
+void slider(bool L_R); // move left or right
+void breakSlider();
+>>>>>>> 8398b369f24a8048ab93ec1fb98b4f9a6535127a
 
 //Higher level functions
 void moveForwards (uint8_t follow, uint8_t until);

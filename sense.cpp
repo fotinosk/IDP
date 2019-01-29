@@ -13,7 +13,11 @@ uint8_t switchBackRightPin = 5;
 
 
 // encoder thresholds
+<<<<<<< HEAD
 //vector<vector<int>> encoder_threshold = {{65,50},{58,40}};
+=======
+vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
+>>>>>>> 8398b369f24a8048ab93ec1fb98b4f9a6535127a
 
 //Function Definitions
 void initSense() {
@@ -60,6 +64,7 @@ bool switchBackBoth() {
     else if(!encoder_status[i] && analogRead(i) < encoder_threshold[i][1])
     {
       encoder_status[i] = true;
+      encoder_count[i] += 2*spinDirection[i] - 1;
       encoder_count_ABS[i] += 1;
     }
   }
