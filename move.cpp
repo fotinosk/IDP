@@ -28,15 +28,8 @@ void spinWheels(int16_t rspd, int16_t lspd) {
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
-  spinDirection = {(1 + (rspd/abs(rspd)))/2, (1 + (lspd/abs(lspd)))/2};
+  spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
 }
-
-//stop the robot
-void breakWheels() {
-  motorRight->setSpeed(0);
-  motorLeft->setSpeed(0);
-}
-
 
 //high level movement fucntions
 //move forwards

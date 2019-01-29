@@ -27,7 +27,6 @@ extern vector<bool> spinDirection;
 //Function Declarations
 void initMove();
 void spinWheels(int16_t rspd, int16_t lspd);
-void breakWheels();
 
 //Higher level functions
 void moveForwards (uint8_t track);
