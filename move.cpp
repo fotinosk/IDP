@@ -11,6 +11,7 @@ Adafruit_DCMotor *motorRight;// = motorShield.getMotor(1);
 Adafruit_DCMotor *motorLeft;// = motorShield.getMotor(2);
 float rTune = 1;
 float lTune = 0.97;
+vector<bool> spinDirection = {1,1};
 
 //Function Definitions
 void initMove() {
@@ -22,11 +23,18 @@ void initMove() {
 }
 
 //low level movement function
-void spinWheels(uint16_t lspd, uint16_t rspd) {
-  motorRight->setSpeed((int16_t) rspd*255/100*rTune);
-  motorLeft->setSpeed((int16_t) lspd*255/100*lTune);
+void spinWheels(int16_t rspd, int16_t lspd) {
+  motorRight->setSpeed((int16_t) abs(rspd)*255/100*rTune);
+  motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
+  spinDirection = {(1 + (rspd/abs(rspd)))/2, (1 + (lspd/abs(lspd)))/2};
+}
+
+//stop the robot
+void breakWheels() {
+  motorRight->setSpeed(0);
+  motorLeft->setSpeed(0);
 }
 
 
