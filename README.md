@@ -10,4 +10,5 @@ TODO:
 * Incorpotate line sensor
 * Use millis to replace delay
 * Carrying LED - will go to pin 0
-* Encoders 
+* Encoders
+* Could change current #defines to enums 

@@ -7,13 +7,13 @@ uint8_t switchFrontLeftPin = 2;
 uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
 uint8_t switchBackRightPin = 5;
-vector<bool> encoder_status = {0,0};
-vector<int> encoder_count = {0,0};
-vector<int> encoder_count_ABS = {0,0};
+//vector<bool> encoder_status = {0,0};
+//vector<int> encoder_count = {0,0};
+//vector<int> encoder_count_ABS = {0,0};
 
 
 // encoder thresholds
-vector<vector<int>> encoder_threshold = {{65,50},{58,40}};
+//vector<vector<int>> encoder_threshold = {{65,50},{58,40}};
 
 //Function Definitions
 void initSense() {
@@ -36,11 +36,18 @@ bool switchBackLeft() {
 bool switchBackRight() {
   return !digitalRead(switchBackRightPin);
 }
+bool switchFrontBoth() {
+  return !(digitalRead(switchFrontLeftPin) || digitalRead(switchFrontRightPin));
+}
 
+bool switchBackBoth() {
+  return !(digitalRead(switchBackLeftPin) || digitalRead(switchBackRightPin));
+}
 /*
  * Call this program in a loop and it will count the encoder positions, both relative (to motor rotation direction) and the absolute number of ticks
  */
-void countEncoder() {
+
+/*void countEncoder() {
 
   for(int i = 0; i < 2; i++)
   {
@@ -62,7 +69,7 @@ void countEncoder() {
 void encoderCountReset() {
   encoder_count = {0,0};
   encoder_count_ABS = {0,0};
-}
+} */
 /*
  * Box Blue 75-85
  * Track Black 9-10

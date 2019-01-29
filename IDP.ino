@@ -11,6 +11,7 @@
 #include "move.h"
 #include "sense.h"
 #include "action.h"
+#include "timer.h"
 //#include "test.h"
 
 //Declare global variables
@@ -25,6 +26,6 @@ void setup() {
 
 void loop() {
   //make into a respond function for testing the switches in the test.cpp
-{
+
 
 }
