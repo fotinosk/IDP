@@ -22,13 +22,12 @@ void initMove() {
 }
 
 //low level movement function
-void spinWheels(uint16_t lspd, uint16_t rspd) {
+void spinWheels(int16_t lspd, int16_t rspd) {
   motorRight->setSpeed((int16_t) rspd*255/100*rTune);
   motorLeft->setSpeed((int16_t) lspd*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
 }
-
 
 //high level movement fucntions
 //move forwards

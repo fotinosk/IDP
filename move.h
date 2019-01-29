@@ -16,6 +16,6 @@ extern float lTune;
 
 //Function Declarations
 void initMove();
-void spinWheels(int16_t lspd, uint16_t rspd);
+void spinWheels(int16_t lspd, int16_t rspd);
 
 #endif /* MOVE_H */

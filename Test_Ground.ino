@@ -13,7 +13,8 @@ void setup() {
 }
   
 void loop() {
-
+  Serial.println(switchFrontRight());
+  //spinWheels(30,30);
 }
   
  
