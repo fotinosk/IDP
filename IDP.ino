@@ -13,24 +13,14 @@
 #include "Arduino.h"
 #include "move.h"
 #include "sense.h"
+#include "timer.h"
 
 //Declare global variables
 
 void setup() {
-  initMove();
-  initSense();
+  initTimer();
+  Serial.begin(9600);
 }
 
-void loop() {
-  wallRight(80);
-  if (switchFrontLeft() && switchFrontRight()) {
-      spinBoth(0);
-      delay(500);
-      spinBoth(-50);
-      delay(420);
-      spinRight(100);
-      spinLeft(-100);
-      delay(800);       
-  }
-
+void loop() {  
 }
