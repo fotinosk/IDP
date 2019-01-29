@@ -51,7 +51,9 @@ void breakSlider() {
 
 //high level movement fucntions
 //move forwards
-  
+    void moveForwards( uint8_t track = NONE) { //This function is for general forwards movement, all-the-while looking for blocks etc
+    
+  }
   //determine break mechanism
   //look fro blocks
   //flappy flappy
@@ -64,5 +66,6 @@ void breakSlider() {
 //detect block
  //use a timer to see if magnetic at anypoint
  //set flaps to middle
+
  
  
