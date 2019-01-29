@@ -57,13 +57,23 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
   return;
 }
   //determine break mechanism
-  //look fro blocks
+  //look for blocks
   //flappy flappy
 
 //turn corner
   //set flaps to block
   //perform turning maneuver.
   //could even use delay here if we wanted to
+
+void turn_corner(bool LR, int16_t spin_speed) { //LR = 0 turn left, LR = 1 turn right 
+  //set flaps to block: that will probably require the servo to be initialised here
+  if (LR == 0) { //spin left
+     spinWheels(80, -20);
+     //combine with timer here or in the main function(?). Preferably main function or else timer.h will have multiple initalisations causing errors
+  }
+  if (LR == 1) { //spin right
+     spinWheels(-20, 80);
+}
 
 //detect block
  //use a timer to see if magnetic at anypoint

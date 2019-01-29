@@ -7,53 +7,55 @@
 #include "action.h"
 
 //Variable Definitions
-Servo frontServo;
-Servo backServo;
-uint8_t gateLeftPos;
-uint8_t gateMidPos;
-uint8_t gateRightPos;
-uint8_t flapLeftPos;
-uint8_t flapMidPos;
-uint8_t flapRightPos;
-uint8_t redLEDPin;
-
+Servo flapServo;
+Servo sortServo;
+Adafruit_DCMotor *sliderMotor;
+uint8_t sortLeftPos = 50;
+uint8_t sortMidPos = 90;
+uint8_t sortRightPos = 130;
+uint8_t flapLeftPos = 50;
+uint8_t flapMidPos = 90;
+uint8_t flapRightPos = 130;
+uint8_t redLEDPin = 0;
 
 //Function Definitions + all other function definitions
 void initAction() {
-  gateLeftPos = 80;
-  gateMidPos = 90;
-  gateRightPos = 100;
-  flapLeftPos = 80;
-  flapMidPos = 90;
-  flapRightPos = 100;
-  redLEDPin = 0;
-  
-  frontServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  backServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  sliderMotor = motorShield.getMotor(3);
+  flapServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
+  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   return;
 }
 
 void flapSet(uint8_t pos) { // 0 - 1- 2 for positions
   switch (pos) {
-    case 0: frontServo.write(flapLeftPos); break;
-    case 1: frontServo.write(flapMidPos); break;
-    case 2: frontServo.write(flapRightPos); break;
+    case 0: flapServo.write(flapLeftPos); break;
+    case 1: flapServo.write(flapMidPos); break;
+    case 2: flapServo.write(flapRightPos); break;
   }
   return;
 }
-void gateSet(uint8_t pos) { // 0 - 1- 2 for positions
+void sortSet(uint8_t pos) { // 0 - 1- 2 for positions
   switch (pos) {
-    case 0: backServo.write(gateLeftPos); break;
-    case 1: backServo.write(gateMidPos); break;
-    case 2: backServo.write(gateRightPos); break;
+    case 0: sortServo.write(sortLeftPos); break;
+    case 1: sortServo.write(sortMidPos); break;
+    case 2: sortServo.write(sortRightPos); break;
   }
   return;
 }
 
-void openHatch() {
+void openSlider() {
   //TODO
   return;
+}
+
+void slider(bool L_R) {
+  sliderMotor->setSpeed(255);
+  sliderMotor->run(L_R ? BACKWARD : FORWARD);
+}
+
+void breakSlider() {
+  sliderMotor->setSpeed(0);
 }
 
 void redLEDOn() {
