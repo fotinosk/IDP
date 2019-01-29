@@ -9,6 +9,7 @@
 Adafruit_MotorShield motorShield;// = Adafruit_MotorShield();
 Adafruit_DCMotor *motorRight;// = motorShield.getMotor(1);
 Adafruit_DCMotor *motorLeft;// = motorShield.getMotor(2);
+Adafruit_DCMotor *sliderMotor;
 float rTune = 1;
 float lTune = 0.97;
 vector<bool> spinDirection = {1,1};
@@ -18,6 +19,7 @@ void initMove() {
   motorShield = Adafruit_MotorShield();
   motorRight = motorShield.getMotor(1);
   motorLeft = motorShield.getMotor(2);
+  sliderMotor = motorShield.getMotor(3);
   motorShield.begin(); //could put in desired frequency for PWM here. Default 1.6 KHz
   return;
 }
@@ -37,6 +39,15 @@ void breakWheels() {
   motorLeft->setSpeed(0);
 }
 
+// move the slider. L_R = 1 -> open, L_R = 0 -> close
+void slider(bool L_R) {
+  sliderMotor->setSpeed(255);
+  sliderMotor->run(L_R ? BACKWARD : FORWARD);
+}
+
+void breakSlider() {
+  sliderMotor->setSpeed(0);
+}
 
 //high level movement fucntions
 //move forwards

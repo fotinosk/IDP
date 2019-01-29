@@ -13,7 +13,7 @@ vector<int> encoder_count_ABS = {0,0};
 
 
 // encoder thresholds
-vector<vector<int>> encoder_threshold = {{65,50},{58,40}};
+vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
 
 //Function Definitions
 void initSense() {
@@ -53,6 +53,7 @@ void countEncoder() {
     else if(!encoder_status[i] && analogRead(i) < encoder_threshold[i][1])
     {
       encoder_status[i] = true;
+      encoder_count[i] += 2*spinDirection[i] - 1;
       encoder_count_ABS[i] += 1;
     }
   }
