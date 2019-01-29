@@ -11,47 +11,23 @@
 */
 //Add needed includes
 #include "Arduino.h"
-//#include "move.h"
-//#include "sense.h"
-//#include "action.h"
+#include "move.h"
+#include "sense.h"
+#include "action.h"
 //#include "test.h"
 
 //Declare global variables
 
-/*phase of operations
--1 will set the function state to inactive ie waiting for a real command
-2 levels of movement functions */
-
 void setup() {
-//  initMove();
-//  initSense();
-//  initAction();
-//  initTest();
+  initMove();
+  initSense();
+  initAction();
+  //initTest();
 
 }
 
 void loop() {
   //make into a respond function for testing the switches in the test.cpp
 {
-  //testSwitches();
-  
 
-  /*if (run) {
-    run = !run;
-    drive(100,100,1);
-
-    mode = square
-    starting turn
-
-    if switches both on and corner_timer finished
-      turn corner
-    if detectblock
-      emergency stop
-      drive slowly
-    else
-      drivewall
-      
-      if*/
-    
-  }
 }

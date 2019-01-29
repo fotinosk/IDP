@@ -1,6 +1,11 @@
 #ifndef MOVE_H
 #define MOVE_H
 
+#define NONE 0
+#define LEFTWALL 1
+#define RIGHTWALL 2
+
+
 //Includes
 #include "Arduino.h"
 #include <Wire.h>
@@ -17,5 +22,8 @@ extern float lTune;
 //Function Declarations
 void initMove();
 void spinWheels(int16_t lspd, uint16_t rspd);
+
+//Higher level functions
+void moveForwards (uint8_t track);
 
 #endif /* MOVE_H */

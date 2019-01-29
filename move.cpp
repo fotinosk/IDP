@@ -32,7 +32,9 @@ void spinWheels(uint16_t lspd, uint16_t rspd) {
 
 //high level movement fucntions
 //move forwards
-  
+    void moveForwards( uint8_t track = NONE) { //This function is for general forwards movement, all-the-while looking for blocks etc
+    
+  }
   //determine break mechanism
   //look fro blocks
   //flappy flappy
@@ -45,5 +47,6 @@ void spinWheels(uint16_t lspd, uint16_t rspd) {
 //detect block
  //use a timer to see if magnetic at anypoint
  //set flaps to middle
+
  
  
