@@ -7,11 +7,7 @@ Libraries you need to install are as follows:
 TODO:
 * We will need some form of documentation so all team members can start using abstraced functions.
 
-*Incorpotate line sensor
-*Add switches at the back 
-*Callibration program
-*Increase resistance switches 100k
-*Switch to middle pins in switches 
-*Use millis to replace delay
-*Carrying LED
-*Encoders 
+* Incorpotate line sensor
+* Use millis to replace delay
+* Carrying LED - will go to pin 0
+* Encoders 
