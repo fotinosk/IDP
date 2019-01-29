@@ -9,8 +9,7 @@ void initTimer() {
 }
 
 unsigned long timer() {
-  unsigned long currentMillis = millis();
-  unsigned long tm = currentMillis - previousMillis ;
+  unsigned long tm = millis() - previousMillis ;
   return tm ;
 }
 void reset_timer() {
