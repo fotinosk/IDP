@@ -20,12 +20,10 @@ void setup() {
   initMove();
   initSense();
   initAction();
+  initTimer();
   //initTest();
-
 }
 
 void loop() {
-  //make into a respond function for testing the switches in the test.cpp
-
 
 }

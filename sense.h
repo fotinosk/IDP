@@ -2,8 +2,8 @@
 #define SENSE_H
 
 #include "Arduino.h"
-//#include <StandardCplusplus.h>
-//#include <vector>
+#include <ArduinoSTL.h>
+#include <vector>
 #include "move.h"
 
 // using standard cpp libraries

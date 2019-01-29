@@ -11,4 +11,9 @@ TODO:
 * Use millis to replace delay
 * Carrying LED - will go to pin 0
 * Encoders
-* Could change current #defines to enums 
+* Could change current #defines to enums
+
+NOTES:
+Each count in the encoder - 0.869cm of distance covered +- 2%
+
+For the slider 4200 ms to open the slide. slider(1) -> open
