@@ -9,7 +9,36 @@
 
 
 //Function Definitions + all other function definitions
-void inittest() {
+void initTest() {
   Serial.begin(9600);
+  initMove();
+  initSense();
+  initAction();
   return;
+}
+
+void testSwitches() {
+  for(;;) {
+            int rspd = 20;
+            int lspd = 20;
+              
+            if (switchFrontRight()) {
+                rspd = -100;
+            }
+            if (switchFrontLeft()) {
+              lspd = -100;
+            }
+            if (switchBackRight()) {
+                rspd = 100;
+            }
+            if (switchBackLeft()) {
+                lspd = 100;
+            }
+          
+            if ((switchFrontRight() && switchBackRight()) || (switchFrontLeft() && switchBackLeft())) {
+              rspd = 0;
+              lspd = 0;
+            }
+            spinWheels(lspd, rspd);
+  }
 }

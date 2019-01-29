@@ -11,8 +11,10 @@
 */
 //Add needed includes
 #include "Arduino.h"
-#include "move.h"
-#include "sense.h"
+//#include "move.h"
+//#include "sense.h"
+//#include "action.h"
+//#include "test.h"
 
 //Declare global variables
 
@@ -21,37 +23,19 @@
 2 levels of movement functions */
 
 void setup() {
-  initMove();
-  initSense();
+//  initMove();
+//  initSense();
+//  initAction();
+//  initTest();
 
 }
 
 void loop() {
   //make into a respond function for testing the switches in the test.cpp
 {
-    int rspd = 20;
-    int lspd = 20;
-    
-  if (switchFrontRight()) {
-      rspd = -100;
-  }
-  if (switchFrontLeft()) {
-    lspd = -100;
-  }
-  if (switchBackRight()) {
-      rspd = 100;
-  }
-  if (switchBackLeft()) {
-      lspd = 100;
-  }
-
-  if ((switchFrontRight() && switchBackRight()) || (switchFrontLeft() && switchBackLeft())) {
-    rspd = 0;
-    lspd = 0;
-  }
-  spinRight(rspd);
-  spinLeft(lspd);
+  //testSwitches();
   
+
   /*if (run) {
     run = !run;
     drive(100,100,1);

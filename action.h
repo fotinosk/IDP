@@ -6,13 +6,14 @@
 #include "Servo.h"
 
 //Variable Declarations
-extern Servo gateServo;
-extern Servo sortServo;
+extern Servo frontServo;
+extern Servo backServo;
 extern uint8_t gateUpPos;
 extern uint8_t gateDownPos;
 extern uint8_t sortKeepPos;
 extern uint8_t sortDiscardPos;
 extern uint8_t redLEDPin;
+
 
 //Function Definitions
 void initAction();

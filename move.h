@@ -11,14 +11,11 @@
 extern Adafruit_MotorShield motorShield;
 extern Adafruit_DCMotor *motorRight;
 extern Adafruit_DCMotor *motorLeft;
+extern float rTune;
+extern float lTune;
 
 //Function Declarations
 void initMove();
-void spinRight(int16_t spd);
-void spinLeft(int16_t spd);
-void spinBoth(int16_t spd);
-void wallRight(int16_t spd);
-void wallLeft(int16_t spd);
-
+void spinWheels(int16_t lspd, uint16_t rspd);
 
 #endif /* MOVE_H */
