@@ -17,6 +17,7 @@ void initMove() {
   motorRight = motorShield.getMotor(1);
   motorLeft = motorShield.getMotor(2);
   motorShield.begin(); //could put in desired frequency for PWM here. Default 1.6 KHz
+  delay(1); //ensure millis() will not return 0
   return;
 }
 
@@ -27,7 +28,7 @@ void spinRight(int16_t spd) {
 }
 
 void spinLeft(int16_t spd) {
-  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.97 : -spd*255/100*0.97);
+  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.97 : -spd*255/100*0.97); //0.97 is to calibrate difference in motor power
   motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
   return;
 }
