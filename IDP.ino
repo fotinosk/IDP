@@ -24,6 +24,11 @@ delay(500);
 Serial.println("now moving servo");
 Serial.println(flapRightPos);
 
+slider(1);
+delay(4200);
+slider(0);
+delay(4400);
+
 flapRight();
 delay(1000);
 flapLeft();
