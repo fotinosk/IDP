@@ -7,12 +7,13 @@
 #include "action.h"
 
 //Variable Definitions
-Servo gateServo;
-Servo sortServo;
+Servo frontServo;
+Servo backServo;
 uint8_t gateUpPos;
 uint8_t gateDownPos;
 uint8_t sortKeepPos;
 uint8_t sortDiscardPos;
+uint8_t redLEDPin;
 
 
 //Function Definitions + all other function definitions
@@ -27,23 +28,23 @@ void initAction() {
   redLEDPin = 0;
   
  
-  gateServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  frontServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
+  backServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   return;
 }
 
 void sortKeep() {
-  sortServo.write(sortKeepPos);
+  frontServo.write(sortKeepPos);
 }
 void sortDiscard() {
-  sortServo.write(sortDiscardPos);
+  frontServo.write(sortDiscardPos);
 }
 void gateDown() {
-  gateServo.write(gateDownPos);
+  backServo.write(gateDownPos);
 }
 void gateUp() {
-  gateServo.write(gateUpPos);
+  backServo.write(gateUpPos);
 }
 void redLEDOn() {
   digitalWrite(redLEDPin, HIGH);

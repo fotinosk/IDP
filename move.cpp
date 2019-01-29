@@ -9,7 +9,8 @@
 Adafruit_MotorShield motorShield;// = Adafruit_MotorShield();
 Adafruit_DCMotor *motorRight;// = motorShield.getMotor(1);
 Adafruit_DCMotor *motorLeft;// = motorShield.getMotor(2);
-
+float rTune = 1;
+float lTune = 0.97;
 
 //Function Definitions
 void initMove() {
@@ -20,33 +21,29 @@ void initMove() {
   return;
 }
 
-void spinRight(int16_t spd) {
-  motorRight->setSpeed(spd >= 0 ? spd*255/100 : -spd*255/100);
-  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
-  return;
+//low level movement function
+void spinWheels(uint16_t lspd, uint16_t rspd) {
+  motorRight->setSpeed((int16_t) rspd*255/100*rTune);
+  motorLeft->setSpeed((int16_t) lspd*255/100*lTune);
+  motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
+  motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
 }
 
-void spinLeft(int16_t spd) {
-  motorLeft->setSpeed(spd >= 0 ? spd*255/100*0.97 : -spd*255/100*0.97);
-  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
-  return;
-}
 
-void spinBoth(int16_t spd) {
-  spinRight(spd);
-  spinLeft(spd);
-}
+//high level movement fucntions
+//move forwards
+  
+  //determine break mechanism
+  //look fro blocks
+  //flappy flappy
 
-void wallRight(int16_t spd) {
-  motorRight->setSpeed((int16_t) spd*255/100*0.97);
-  motorLeft->setSpeed((int16_t) spd*255/100);
-  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
-  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
-}
+//turn corner
+  //set flaps to block
+  //perform turning maneuver.
+  //could even use delay here if we wanted to
 
-void wallLeft(int16_t spd) {
-  motorRight->setSpeed((int16_t) spd*255/100);
-  motorLeft->setSpeed((int16_t) spd*255/100*0.97);
-  motorRight->run(spd>=0 ? FORWARD : BACKWARD);
-  motorLeft->run(spd>=0 ? FORWARD : BACKWARD);
-}
+//detect block
+ //use a timer to see if magnetic at anypoint
+ //set flaps to middle
+ 
+ 

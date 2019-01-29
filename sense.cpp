@@ -18,16 +18,16 @@ void initSense() {
 }
 
 bool switchFrontLeft() {
-  return digitalRead(switchFrontLeftPin);
+  return !digitalRead(switchFrontLeftPin);
 }
 bool switchFrontRight() {
-  return digitalRead(switchFrontRightPin); 
+  return !digitalRead(switchFrontRightPin); 
 }
 bool switchBackLeft() {
-  return digitalRead(switchBackLeftPin);
+  return !digitalRead(switchBackLeftPin);
 }
 bool switchBackRight() {
-  return digitalRead(switchBackRightPin);
+  return !digitalRead(switchBackRightPin);
 }
 
 /*

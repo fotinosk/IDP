@@ -15,4 +15,6 @@
 //Function Definitions + other functions that are required
 void initTest();
 
+void testSwitches();
+
 #endif /* TEST_H */
