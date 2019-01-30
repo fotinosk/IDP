@@ -56,7 +56,7 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
   return;
 }
 
-void turnCorner(uint8_t dir) {
+void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking
   sortSet(MIDPOS);
   flapSet(MIDPOS);
@@ -76,10 +76,10 @@ void turnCorner(uint8_t dir) {
   return;
 }
 
-//turn corner
-  //set flaps to block
-  //perform turning maneuver.
-  //could even use delay here if we wanted to
+void turnAround (uint8_t dir) {
+  
+}
+
 //turn 180 w shift left or right for snaking
 //detect block
  //use a timer to see if magnetic at anypoint
