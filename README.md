@@ -15,9 +15,18 @@ TODO:
 * Encoders
 * Could change current #defines to enums
 
+TODO for mechanical:
+* The sort rack and pinion slips
+* the switches on the back don't trigger
+* Slider doesn't close all the way and over time tends to come off the pinion.
+* front left and right wheels still not big enough.
+
+
 NOTES:
 Each count in the encoder - 0.869cm of distance covered +- 2%
 
 For the slider 4200 ms to open the slide. slider(1) -> open
 
 might need to add a timer in the turn function to spam flap instead of setting it
+
+T

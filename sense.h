@@ -8,6 +8,11 @@
 #include <vector>
 #include "move.h"
 
+#define BLACK 1
+#define RED 2
+#define WHITE 3
+#define GREEN 4
+
 // using standard cpp libraries
 using namespace std;
 
@@ -20,10 +25,6 @@ extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
-#define BLACK 1
-#define RED 2
-#define WHITE 2
-#define GREEN 4
 
 //Function Definitions + other functions that are required
 void initSense();

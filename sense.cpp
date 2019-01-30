@@ -81,22 +81,23 @@ void encoderCountReset() {
 
 int LineSensor() {
   int rd = analogRead(A2); 
-  delay(100);
+  delay(20);
   if (rd < 15 && rd > 5) {
+<<<<<<< HEAD
     //black
     return BLACK;  
     //return 1; 
+=======
+    return BLACK;  
+>>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
   }
   if (rd < 110 && rd > 100) {
-    //red
     return RED; 
   }
   if (rd < 215 && rd > 200) {
-    //white
     return WHITE; 
   }
   if (rd < 120 && rd > 115) {
-    //green
     return GREEN; 
   }
 }
