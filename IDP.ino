@@ -25,10 +25,6 @@ void setup() {
 }
 
 void loop() {
-  openSlider();
-  delay(1000);
-  closeSlider();
-  delay(1000);
-  
-
+  moveForwards(RIGHTWALL, WALL);
+  turnCorner(LEFTTURN);
 }
