@@ -77,6 +77,17 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
 }
 
 void turnAround (uint8_t dir) {
+   //sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  spinWheels(-100,-100);
+  delay(300);
+  spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
+  delay(600);
+  spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
+  delay(3200);
+  spinWheels(-100, -100);
+  while (!switchBackBoth()) {}
+  return;
   //one wehell back
   //other wheel forwards
   //crash back and go
