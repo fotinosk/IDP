@@ -1,4 +1,4 @@
-/*The Main file of the IDP project.
+  /*The Main file of the IDP project.
    This will contain only the setup() and loop() functions. All else should be #included.
    Any include will take up valuable space on the arduino so should be
    modular and application specific.
@@ -12,9 +12,11 @@
 #include "sense.h"
 #include "action.h"
 #include "timer.h"
-//#include "test.h"
+#include "test.h"
 
 //Declare global variables
+int period = 1000;
+unsigned long tm = timer();
 
 void setup() {
   initMove();
@@ -22,8 +24,18 @@ void setup() {
   initAction();
   initTimer();
   //initTest();
+  //closeSlider();
+  flapSet(0);
 }
 
 void loop() {
-
+<<<<<<< HEAD
+  //spinWheels(50,50);
+  //delay(1000);
+  turnAround(LEFTTURN);
+  delay(2000);
+=======
+  moveForwards(RIGHTWALL, WALL);
+  turnCorner(LEFTTURN);
+>>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
 }

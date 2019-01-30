@@ -19,8 +19,8 @@ void initTest() {
 
 void testSwitches() {
   for(;;) {
-            int rspd = 20;
-            int lspd = 20;
+            int rspd = 0;
+            int lspd = 0;
               
             if (switchFrontRight()) {
                 rspd = -100;
@@ -42,3 +42,58 @@ void testSwitches() {
             spinWheels(lspd, rspd);
   }
 }
+<<<<<<< HEAD
+/*
+void turnAround (uint8_t dir) {
+  sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  spinWheels(-100,-100);
+  delay(200);
+  switch (dir) {
+    case RIGHTTURN: spinWheels(-100, 100); break;
+    case LEFTTURN: spinWheels(100, -100); break;
+  }
+  delay(2000); //need callibration
+  spinWheels(100,100);
+  delay(200);
+}
+*/
+=======
+
+void testMotors() {
+  spinWheels(100,0);
+  delay(1000);
+  spinWheels(0, 100);
+  delay(1000);
+  spinWheels(0, -100);
+  delay(1000);
+  spinWheels(-100, 0);
+  delay(1000);
+}
+
+void testFlap() {
+  for (;;) {
+    flapSet(LEFTPOS);
+    delay(1000);
+    flapSet(MIDPOS);
+    delay(1000);
+    flapSet(RIGHTPOS);
+    delay(1000);
+  }
+}
+void testSort() {
+    sortSet(LEFTPOS);
+    delay(1000);
+    sortSet(MIDPOS);
+    delay(1000);
+    sortSet(RIGHTPOS);
+    delay(1000);
+}
+
+void testSlider() {
+  openSlider();
+  delay(1000);
+  closeSlider();
+  delay(1000);
+}
+>>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6

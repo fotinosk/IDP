@@ -78,25 +78,26 @@ void encoderCountReset() {
  * Track White 200-215
  * TRack Green 115-120
  */
-/*
+
 int LineSensor() {
-  int rd = analogRead(A1); 
-  delay(100);
+  int rd = analogRead(A2); 
+  delay(20);
   if (rd < 15 && rd > 5) {
+<<<<<<< HEAD
     //black
-    return 1; 
+    return BLACK;  
+    //return 1; 
+=======
+    return BLACK;  
+>>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
   }
   if (rd < 110 && rd > 100) {
-    //red
-    return 2; 
+    return RED; 
   }
   if (rd < 215 && rd > 200) {
-    //white
-    return 3; 
+    return WHITE; 
   }
   if (rd < 120 && rd > 115) {
-    //green
-    return 4; 
+    return GREEN; 
   }
 }
-*/
