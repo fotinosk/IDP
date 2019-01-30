@@ -42,7 +42,7 @@ void testSwitches() {
             spinWheels(lspd, rspd);
   }
 }
-<<<<<<< HEAD
+
 /*
 void turnAround (uint8_t dir) {
   sortSet(MIDPOS);
@@ -58,7 +58,6 @@ void turnAround (uint8_t dir) {
   delay(200);
 }
 */
-=======
 
 void testMotors() {
   spinWheels(100,0);
@@ -96,4 +95,3 @@ void testSlider() {
   closeSlider();
   delay(1000);
 }
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6

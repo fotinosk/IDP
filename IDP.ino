@@ -29,13 +29,10 @@ void setup() {
 }
 
 void loop() {
-<<<<<<< HEAD
   //spinWheels(50,50);
   //delay(1000);
   turnAround(LEFTTURN);
   delay(2000);
-=======
   moveForwards(RIGHTWALL, WALL);
   turnCorner(LEFTTURN);
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
 }
