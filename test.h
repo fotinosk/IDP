@@ -16,5 +16,9 @@
 void initTest();
 
 void testSwitches();
+void testMotors();
+void testFlap();
+void testSort();
+void testSlider();
 
 #endif /* TEST_H */

@@ -12,7 +12,7 @@
 #include "sense.h"
 #include "action.h"
 #include "timer.h"
-//#include "test.h"
+#include "test.h"
 
 //Declare global variables
 
@@ -25,5 +25,10 @@ void setup() {
 }
 
 void loop() {
+  openSlider();
+  delay(1000);
+  closeSlider();
+  delay(1000);
+  
 
 }

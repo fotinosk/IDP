@@ -10,19 +10,19 @@
 Servo flapServo;
 Servo sortServo;
 Adafruit_DCMotor *sliderMotor;
-uint8_t sortLeftPos = 50;
+uint8_t sortLeftPos = 50; //tbd
 uint8_t sortMidPos = 90;
 uint8_t sortRightPos = 130;
-uint8_t flapLeftPos = 50;
-uint8_t flapMidPos = 90;
-uint8_t flapRightPos = 130;
+uint8_t flapLeftPos = 122;
+uint8_t flapMidPos = 92;
+uint8_t flapRightPos = 62;
 uint8_t redLEDPin = 0;
 
 //Function Definitions + all other function definitions
 void initAction() {
   sliderMotor = motorShield.getMotor(3);
-  flapServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  flapServo.attach(9); //the number is the pin. could be 9,10,11,12 tbd
+  sortServo.attach(10);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   return;
 }

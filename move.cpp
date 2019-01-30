@@ -11,8 +11,8 @@ vector<bool> spinDirection = {1,1};
 
 //Function Definitions
 void initMove() {
-  motorRight = motorShield.getMotor(1);
-  motorLeft = motorShield.getMotor(2);
+  motorRight = motorShield.getMotor(2);
+  motorLeft = motorShield.getMotor(1);
   motorShield.begin();
   return;
 }
@@ -77,7 +77,9 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
 }
 
 void turnAround (uint8_t dir) {
-  
+  //one wehell back
+  //other wheel forwards
+  //crash back and go
 }
 
 //turn 180 w shift left or right for snaking

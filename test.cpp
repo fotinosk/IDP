@@ -42,3 +42,40 @@ void testSwitches() {
             spinWheels(lspd, rspd);
   }
 }
+
+void testMotors() {
+  spinWheels(100,0);
+  delay(1000);
+  spinWheels(0, 100);
+  delay(1000);
+  spinWheels(0, -100);
+  delay(1000);
+  spinWheels(-100, 0);
+  delay(1000);
+}
+
+void testFlap() {
+  for (;;) {
+    flapSet(LEFTPOS);
+    delay(1000);
+    flapSet(MIDPOS);
+    delay(1000);
+    flapSet(RIGHTPOS);
+    delay(1000);
+  }
+}
+void testSort() {
+    sortSet(LEFTPOS);
+    delay(1000);
+    sortSet(MIDPOS);
+    delay(1000);
+    sortSet(RIGHTPOS);
+    delay(1000);
+}
+
+void testSlider() {
+  openSlider();
+  delay(1000);
+  closeSlider();
+  delay(1000);
+}
