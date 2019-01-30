@@ -27,8 +27,6 @@ void flapSet(uint8_t pos);
 void sortSet(uint8_t pos);
 void openSlider();
 void closeSlider();
-void slider(bool L_R); // move left or right
-void breakSlider();
 
 //Block carrying light
 void redLEDOn();

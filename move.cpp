@@ -7,7 +7,7 @@ Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
 float lTune = 0.97;
-//vector<bool> spinDirection = {1,1};
+vector<bool> spinDirection = {1,1};
 
 //Function Definitions
 void initMove() {
@@ -23,7 +23,7 @@ void spinWheels(int16_t rspd, int16_t lspd) {
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
- // spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
+  spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
 }
 
 //high level movement fucntions

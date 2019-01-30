@@ -46,7 +46,7 @@ void sortSet(uint8_t pos) { // 0 - 1 - 2 for positions
 void openSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(BACKWARD);
-  delay(4200)
+  delay(4200);
   sliderMotor->setSpeed(0);
   return;
 }
@@ -54,7 +54,7 @@ void openSlider() {
 void closeSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(FORWARD);
-  delay(4200)
+  delay(4200);
   sliderMotor->setSpeed(0);
   return;
 }
