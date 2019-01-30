@@ -84,33 +84,22 @@ int LineSensor() {
   delay(100);
   if (rd < 15 && rd > 5) {
     //black
+<<<<<<< HEAD
+    return BLACK;  
+=======
     return 1; 
+>>>>>>> 6e7e0bafb36602ec1ce84d5254433af1ea5b2275
   }
   if (rd < 110 && rd > 100) {
     //red
-    return 2; 
+    return RED; 
   }
   if (rd < 215 && rd > 200) {
     //white
-    return 3; 
+    return WHITE; 
   }
   if (rd < 120 && rd > 115) {
     //green
-    return 4; 
-  }
-}
-char LineSensor_unpacked() {
-  int ls = LineSensor();
-  if (ls == 1) {
-    return 'black';
-  }
-  if (ls == 2) {
-    return 'red';
-  }
-  if (ls == 3) {
-    return 'white';
-  }  
-  if (ls == 4) {
-    return 'green';
+    return GREEN; 
   }
 }
