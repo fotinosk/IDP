@@ -2,6 +2,7 @@
 #include "sense.h"
 
 //Variable Definitions
+//int color;
 uint8_t switchFrontLeftPin = 2;
 uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
@@ -79,12 +80,15 @@ void encoderCountReset() {
  */
 
 int LineSensor() {
-  int rd = analogRead(A1); 
-  //delay(100);
-  
+  int rd = analogRead(A2); 
+  delay(100);
   if (rd < 15 && rd > 5) {
     //black
+<<<<<<< HEAD
     return BLACK;  
+=======
+    return 1; 
+>>>>>>> 6e7e0bafb36602ec1ce84d5254433af1ea5b2275
   }
   if (rd < 110 && rd > 100) {
     //red
