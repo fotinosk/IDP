@@ -54,7 +54,7 @@ void openSlider() {
 void closeSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(FORWARD);
-  delay(4200);
+  delay(4400);
   sliderMotor->setSpeed(0);
   return;
 }
