@@ -7,6 +7,11 @@
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 
+//flap and gate positions
+#define LEFTPOS 0
+#define MIDPOS 1
+#define RIGHTPOS 2
+
 //Variable Declarations
 extern Servo flapServo;
 extern Servo sortServo;

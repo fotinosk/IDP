@@ -6,7 +6,7 @@ Adafruit_MotorShield motorShield = Adafruit_MotorShield();//
 Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
-float lTune = 0.97;
+float lTune = 0.993;
 vector<bool> spinDirection = {1,1};
 
 //Function Definitions
@@ -34,7 +34,7 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
   
   for (;;) {
     long tm = millis();
-    flapSet(tm%(2*flapDelay)>flapDelay ? 0 : 2); //Flap back and forth at flapDelay
+    flapSet(tm%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS); //Flap back and forth at flapDelay
    
     if (0 /* OR detect block*/) {
       //perform block sorting routing here
@@ -56,22 +56,30 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
   return;
 }
 
+void turnCorner(uint8_t dir) {
+  //set flap & gate to blocking
+  sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  spinWheels(-100,-100);
+  delay(500);
+  switch (dir) {
+    case RIGHTTURN: spinWheels(-20, 100); break; //to actually turn, this needs fine tuning
+    case LEFTTURN: spinWheels(100, -20); break;
+  }
+  delay(500);
+  spinWheels(100, 100); //so blocks are pushed back again.
+  delay(100)
+  sortSet(RIGHTPOS);
+  spinWheels(100, 100); //start driving again
+  delay(500)
+  
+  return
+}
+
 //turn corner
   //set flaps to block
   //perform turning maneuver.
   //could even use delay here if we wanted to
-
-void turn_corner(bool LR, int16_t spin_speed) { //LR = 0 turn left, LR = 1 turn right 
-  //set flaps to block: that will probably require the servo to be initialised here
-  if (LR == 0) { //spin left
-     spinWheels(80, -20);
-     //combine with timer here or in the main function(?). Preferably main function or else timer.h will have multiple initalisations causing errors
-  }
-  if (LR == 1) { //spin right
-     spinWheels(-20, 80);
-  }
-}
-
 //turn 180 w shift left or right for snaking
 //detect block
  //use a timer to see if magnetic at anypoint

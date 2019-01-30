@@ -1,4 +1,4 @@
-/*The Main file of the IDP project.
+  /*The Main file of the IDP project.
    This will contain only the setup() and loop() functions. All else should be #included.
    Any include will take up valuable space on the arduino so should be
    modular and application specific.
