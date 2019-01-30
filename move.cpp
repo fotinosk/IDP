@@ -68,12 +68,12 @@ void turnCorner(uint8_t dir) {
   }
   delay(500);
   spinWheels(100, 100); //so blocks are pushed back again.
-  delay(100)
+  delay(100);
   sortSet(RIGHTPOS);
   spinWheels(100, 100); //start driving again
-  delay(500)
+  delay(500);
   
-  return
+  return;
 }
 
 //turn corner

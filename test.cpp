@@ -19,8 +19,8 @@ void initTest() {
 
 void testSwitches() {
   for(;;) {
-            int rspd = 20;
-            int lspd = 20;
+            int rspd = 0;
+            int lspd = 0;
               
             if (switchFrontRight()) {
                 rspd = -100;
