@@ -19,6 +19,7 @@ TODO for mechanical:
 * The sort rack and pinion slips
 * the switches on the back don't trigger
 * Slider doesn't close all the way and over time tends to come off the pinion.
+* front left and right wheels still not big enough.
 
 
 NOTES:
