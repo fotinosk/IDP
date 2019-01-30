@@ -41,5 +41,5 @@ void spinWheels(int16_t rspd, int16_t lspd);
 //Higher level functions
 void moveForwards (uint8_t follow, uint8_t until);
 void turnCorner (uint8_t dir);
-
+void turnAround (uint8_t dir);
 #endif /* MOVE_H */
