@@ -99,3 +99,18 @@ int LineSensor() {
     return 4; 
   }
 }
+char LineSensor_unpacked() {
+  int ls = LineSensor();
+  if (ls == 1) {
+    return 'black';
+  }
+  if (ls == 2) {
+    return 'red';
+  }
+  if (ls == 3) {
+    return 'white';
+  }  
+  if (ls == 4) {
+    return 'green';
+  }
+}
