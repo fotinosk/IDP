@@ -2,7 +2,6 @@
 #include "sense.h"
 
 //Variable Definitions
-//int color;
 uint8_t switchFrontLeftPin = 2;
 uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
@@ -78,13 +77,14 @@ void encoderCountReset() {
  * Track White 200-215
  * TRack Green 115-120
  */
-/*
+
 int LineSensor() {
   int rd = analogRead(A1); 
-  delay(100);
+  //delay(100);
+  
   if (rd < 15 && rd > 5) {
     //black
-    return 1; 
+    return 1;  
   }
   if (rd < 110 && rd > 100) {
     //red
@@ -99,4 +99,18 @@ int LineSensor() {
     return 4; 
   }
 }
-*/
+char LineSensor_unpacked() {
+  int ls = LineSensor();
+  if (ls == 1) {
+    return 'black';
+  }
+  if (ls == 2) {
+    return 'red';
+  }
+  if (ls == 3) {
+    return 'white';
+  }  
+  if (ls == 4) {
+    return 'green';
+  }
+}
