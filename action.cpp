@@ -27,7 +27,7 @@ void initAction() {
   return;
 }
 
-void flapSet(uint8_t pos) { // 0 - 1- 2 for positions
+void flapSet(uint8_t pos) { // 0 - 1 - 2 for positions
   switch (pos) {
     case 0: flapServo.write(flapLeftPos); break;
     case 1: flapServo.write(flapMidPos); break;
@@ -35,7 +35,7 @@ void flapSet(uint8_t pos) { // 0 - 1- 2 for positions
   }
   return;
 }
-void sortSet(uint8_t pos) { // 0 - 1- 2 for positions
+void sortSet(uint8_t pos) { // 0 - 1 - 2 for positions
   switch (pos) {
     case 0: sortServo.write(sortLeftPos); break;
     case 1: sortServo.write(sortMidPos); break;
@@ -43,19 +43,20 @@ void sortSet(uint8_t pos) { // 0 - 1- 2 for positions
   }
   return;
 }
-
 void openSlider() {
-  //TODO
+  sliderMotor->setSpeed(255);
+  sliderMotor->run(BACKWARD);
+  delay(4200);
+  sliderMotor->setSpeed(0);
   return;
 }
 
-void slider(bool L_R) {
+void closeSlider() {
   sliderMotor->setSpeed(255);
-  sliderMotor->run(L_R ? BACKWARD : FORWARD);
-}
-
-void breakSlider() {
+  sliderMotor->run(FORWARD);
+  delay(4200);
   sliderMotor->setSpeed(0);
+  return;
 }
 
 void redLEDOn() {

@@ -6,13 +6,13 @@ uint8_t switchFrontLeftPin = 2;
 uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
 uint8_t switchBackRightPin = 5;
-//vector<bool> encoder_status = {0,0};
-//vector<int> encoder_count = {0,0};
-//vector<int> encoder_count_ABS = {0,0};
+vector<bool> encoder_status = {0,0};
+vector<int> encoder_count = {0,0};
+vector<int> encoder_count_ABS = {0,0};
 
 
 // encoder thresholds
-//vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
+vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
 
 //Function Definitions
 void initSense() {

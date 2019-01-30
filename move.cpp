@@ -2,16 +2,15 @@
 #include "move.h"
 
 //Variable Definitions
-Adafruit_MotorShield motorShield;//
+Adafruit_MotorShield motorShield = Adafruit_MotorShield();//
 Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
 float lTune = 0.97;
-//vector<bool> spinDirection = {1,1};
+vector<bool> spinDirection = {1,1};
 
 //Function Definitions
 void initMove() {
-  motorShield = Adafruit_MotorShield();
   motorRight = motorShield.getMotor(1);
   motorLeft = motorShield.getMotor(2);
   motorShield.begin();
@@ -24,7 +23,7 @@ void spinWheels(int16_t rspd, int16_t lspd) {
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
- // spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
+  spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
 }
 
 //high level movement fucntions
@@ -56,9 +55,6 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
   }
   return;
 }
-  //determine break mechanism
-  //look for blocks
-  //flappy flappy
 
 //turn corner
   //set flaps to block
@@ -73,8 +69,10 @@ void turn_corner(bool LR, int16_t spin_speed) { //LR = 0 turn left, LR = 1 turn 
   }
   if (LR == 1) { //spin right
      spinWheels(-20, 80);
+  }
 }
 
+//turn 180 w shift left or right for snaking
 //detect block
  //use a timer to see if magnetic at anypoint
  //set flaps to middle
