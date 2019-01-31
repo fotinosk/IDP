@@ -10,9 +10,9 @@
 Servo flapServo;
 Servo sortServo;
 Adafruit_DCMotor *sliderMotor;
-uint8_t sortLeftPos = 50; //tbd
-uint8_t sortMidPos = 90;
-uint8_t sortRightPos = 130;
+uint8_t sortLeftPos = 170; //tbd
+uint8_t sortMidPos = 118;
+uint8_t sortRightPos = 60;
 uint8_t flapLeftPos = 122;
 uint8_t flapMidPos = 92;
 uint8_t flapRightPos = 62;

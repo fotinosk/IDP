@@ -17,3 +17,29 @@ unsigned long timer() {
 void reset_timer() {
  unsigned long previousMillis = millis();
 }
+
+bool magnetTimer(uint16_t dur, bool set) { //dur is duration, 1 to set, 0 to read
+  static bool active = false;
+  static unsigned long endtime;
+  if(!active){
+    if (set) {
+      active = true;
+      endtime = millis() + dur;
+      return true;
+    }
+    return false;
+  }
+  else{//if active
+    if (set) {
+      active = true;
+      endtime = millis() + dur;
+      return true;
+    }
+    if (endtime <= millis()) {
+      active = false;
+      return false();
+    }
+    return true
+  }
+  
+}

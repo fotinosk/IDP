@@ -26,6 +26,8 @@ void spinWheels(int16_t lspd, int16_t rspd) {
   spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
 }
 
+//might need a middle level movement fucniton in here which spins wheels but can also loop and detect block etc
+
 //high level movement fucntions
 /*general high-level function for movement. follow is whether its tracking a wall/line. until is the point at which it breaks out of this function*/
 void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) { 
@@ -36,8 +38,8 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
     long tm = millis();
     flapSet(tm%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS); //Flap back and forth at flapDelay
    
-    if (0 /* OR detect block*/) {
-      //perform block sorting routing here
+    if (0 /* OR detect blockw tih microswitch*/) {
+      analyseBlock();
     }
     if (until == WALL && switchFrontBoth()) {
       break;
@@ -66,7 +68,6 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-
   delay(1100); //700
   spinWheels(100, 100); //so blocks are pushed back again.
   delay(100); //500
@@ -89,9 +90,23 @@ void turnAround (uint8_t dir) {
 
 }
 
-//turn 180 w shift left or right for snaking
-//detect block
- //use a timer to see if magnetic at anypoint
- //set flaps to middle
+bool analyseBlock() {
+  bool magnetic = false;
+  spinWheels(0,0);
+  sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  magnetTimer(2000, SET);
+  while (magnetTimer(0, READ)) {
+    spinWheels(5,5);
+    //if detect a wall do a safety thing here
+    if (hallSensor())
+      magnetic = true;
+      magnetTimer(0, SET);
+      break;
+  }
+  sortSet(magnetic ? RIGHTPOS : LEFTPOS);
+  
+  
+}
 
  

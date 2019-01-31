@@ -7,6 +7,7 @@
 #include <Adafruit_MotorShield.h>
 #include "sense.h"
 #include "action.h"
+#include "timer.h"
 #include <ArduinoSTL.h>
 #include <vector>
 #include "utility/Adafruit_MS_PWMServoDriver.h" //not sure what this does yet
@@ -42,5 +43,6 @@ void spinWheels(int16_t rspd, int16_t lspd);
 void moveForwards (uint8_t follow, uint8_t until);
 void turnCorner (uint8_t dir);
 void turnAround (uint8_t dir);
+bool analyseBlock();
 
 #endif /* MOVE_H */

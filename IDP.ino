@@ -29,16 +29,5 @@ void setup() {
 }
 
 void loop() {
-  spinWheels(0,100);
-  delay(300);
-  moveForwards(LEFTWALL, WALL);
-  turnCorner(RIGHTTURN);
-    moveForwards(LEFTWALL, WALL);
-  turnCorner(RIGHTTURN);
-    moveForwards(LEFTWALL, WALL);
-  turnCorner(RIGHTTURN);
-  spinWheels(100, 100);
-  delay(5000);
-  spinWheels(0,0);
-  delay(999999);
+  testSort();
 }
