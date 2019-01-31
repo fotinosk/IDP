@@ -66,14 +66,11 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-  delay(700); //1100
-  spinWheels(100, 100); //so blocks are pushed back again.
-  delay(500); //100
-//  sortSet(RIGHTPOS);
 
-  spinWheels(100, 100); //start driving again
-  delay(500);
-  
+  delay(1100); //700
+  spinWheels(100, 100); //so blocks are pushed back again.
+  delay(100); //500
+//  sortSet(RIGHTPOS);
   return;
 }
 

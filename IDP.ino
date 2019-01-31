@@ -29,7 +29,6 @@ void setup() {
 }
 
 void loop() {
-
   spinWheels(0,100);
   delay(300);
   moveForwards(LEFTWALL, WALL);
@@ -42,5 +41,4 @@ void loop() {
   delay(5000);
   spinWheels(0,0);
   delay(999999);
-
 }

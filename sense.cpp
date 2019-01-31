@@ -84,6 +84,7 @@ int LineSensor() {
   delay(20);
   if (rd < 15 && rd > 5) {
     return BLACK;  
+
   }
   if (rd < 110 && rd > 100) {
     return RED; 
