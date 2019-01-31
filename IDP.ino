@@ -15,6 +15,8 @@
 #include "test.h"
 
 //Declare global variables
+//int period = 1000;
+//unsigned long tm = timer();
 
 void setup() {
   initMove();
@@ -22,9 +24,12 @@ void setup() {
   initAction();
   initTimer();
   //initTest();
+  //closeSlider();
+  flapSet(0);
 }
 
 void loop() {
+
   spinWheels(0,100);
   delay(300);
   moveForwards(LEFTWALL, WALL);

@@ -42,6 +42,21 @@ void testSwitches() {
             spinWheels(lspd, rspd);
   }
 }
+/*
+void turnAround (uint8_t dir) {
+  sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  spinWheels(-100,-100);
+  delay(200);
+  switch (dir) {
+    case RIGHTTURN: spinWheels(-100, 100); break;
+    case LEFTTURN: spinWheels(100, -100); break;
+  }
+  delay(2000); //need callibration
+  spinWheels(100,100);
+  delay(200);
+}
+*/
 
 void testMotors() {
   spinWheels(100,0);

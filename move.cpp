@@ -66,10 +66,11 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-  delay(1100);
+  delay(700); //1100
   spinWheels(100, 100); //so blocks are pushed back again.
-  delay(100);
-  //sortSet(RIGHTPOS);
+  delay(500); //100
+//  sortSet(RIGHTPOS);
+
   spinWheels(100, 100); //start driving again
   delay(500);
   
@@ -88,9 +89,7 @@ void turnAround (uint8_t dir) {
   spinWheels(-100, -100);
   while (!switchBackBoth()) {}
   return;
-  //one wehell back
-  //other wheel forwards
-  //crash back and go
+
 }
 
 //turn 180 w shift left or right for snaking
@@ -98,5 +97,4 @@ void turnAround (uint8_t dir) {
  //use a timer to see if magnetic at anypoint
  //set flaps to middle
 
- 
  
