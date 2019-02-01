@@ -13,8 +13,8 @@ TODO:
 * Carrying LED - will go to pin 0
 * Encoders
 * Could change current #defines to enums
- 
- 
+*----------------------------------------------
+
 * Reorder timer function and make easier to use and add pausing
 * make new file for block analysis
 * make a mid-tier moevement fucntion to be able to move differently than just forwards and detect blocks at the same time
