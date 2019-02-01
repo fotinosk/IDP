@@ -24,10 +24,9 @@ void setup() {
   initAction();
   initTimer();
   //initTest();
-  //closeSlider();
-  flapSet(0);
+  Serial.begin(9600);
 }
 
 void loop() {
-  testSort();
+
 }

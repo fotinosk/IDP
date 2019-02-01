@@ -37,9 +37,9 @@ bool magnetTimer(uint16_t dur, bool set) { //dur is duration, 1 to set, 0 to rea
     }
     if (endtime <= millis()) {
       active = false;
-      return false();
+      return false;
     }
-    return true
+    return true;
   }
   
 }

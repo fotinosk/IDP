@@ -25,6 +25,7 @@ extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
+extern uint8_t hallSensorPin;
 
 //Function Definitions + other functions that are required
 void initSense();
@@ -37,5 +38,6 @@ bool switchBackBoth();
 void countEncoder();
 void encoderCountReset();
 int LineSensor();
+bool hallSensor();
 
 #endif

@@ -7,6 +7,7 @@ uint8_t switchFrontLeftPin = 2;
 uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
 uint8_t switchBackRightPin = 5;
+uint8_t hallSensorPin = 22;
 vector<bool> encoder_status = {0,0};
 vector<int> encoder_count = {0,0};
 vector<int> encoder_count_ABS = {0,0};
@@ -21,6 +22,7 @@ void initSense() {
   pinMode(switchFrontRightPin, INPUT);
   pinMode(switchBackLeftPin, INPUT);
   pinMode(switchFrontRightPin, INPUT);
+  pinMode(hallSensorPin, INPUT);
   return;
 }
 
@@ -95,4 +97,8 @@ int LineSensor() {
   if (rd < 120 && rd > 115) {
     return GREEN; 
   }
+}
+
+bool hallSensor() {
+  return digitalRead(hallSensor);
 }
