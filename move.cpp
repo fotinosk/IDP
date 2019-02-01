@@ -30,10 +30,9 @@ void spinWheels(int16_t lspd, int16_t rspd) {
 
 //high level movement fucntions
 /*general high-level function for movement. follow is whether its tracking a wall/line. until is the point at which it breaks out of this function*/
-void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) { 
-  
-  uint16_t flapDelay = 5000; //in ms
-  
+void moveForwards(uint8_t follow = NONE, uint32_t until = WALL) { 
+  uint16_t flapDelay = 800; //in ms
+  moveTimer(SET, until);
   for (;;) {
     long tm = millis();
     flapSet(tm%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS); //Flap back and forth at flapDelay
@@ -47,7 +46,9 @@ void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) {
     if (until == LINE/* && Line != black() */) {
       break;
     }
-    
+    if (until > 10 && !moveTimer(READ, 0)) {
+      break;
+    }
     //perform appropriate wheel actions
     switch (follow) {
       case NONE: spinWheels(100, 100); break;
@@ -90,23 +91,21 @@ void turnAround (uint8_t dir) {
 
 }
 
-bool analyseBlock() {
+void analyseBlock() {
   bool magnetic = false;
   spinWheels(0,0);
   sortSet(MIDPOS);
   flapSet(MIDPOS);
-  magnetTimer(2000, SET);
-  while (magnetTimer(0, READ)) {
-    spinWheels(5,5);
+//  magnetTimer(2000, SET);
+  spinWheels(5,5);
+  while (1/*magnetTimer(0, READ)*/) { //while magnet timer is set
     //if detect a wall do a safety thing here
     if (hallSensor())
       magnetic = true;
-      magnetTimer(0, SET);
       break;
   }
-  sortSet(magnetic ? RIGHTPOS : LEFTPOS);
-  
-  
+  sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+  return;
 }
 
  

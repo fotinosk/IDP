@@ -8,6 +8,7 @@
 #include <vector>
 #include "move.h"
 
+//colours for the line sensor
 #define BLACK 1
 #define RED 2
 #define WHITE 3
@@ -37,7 +38,7 @@ bool switchFrontBoth();
 bool switchBackBoth();
 void countEncoder();
 void encoderCountReset();
-int LineSensor();
+uint8_t lineSensor();
 bool hallSensor();
 
 #endif

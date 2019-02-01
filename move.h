@@ -16,7 +16,7 @@
 #define NONE 0
 #define LEFTWALL 1
 #define RIGHTWALL 2
-//until
+//until - values greater than 10 reserved for timing based movement.
 #define FOREVER 0
 #define WALL 1
 #define LINE 2
@@ -40,9 +40,9 @@ void initMove();
 void spinWheels(int16_t rspd, int16_t lspd);
 
 //Higher level functions
-void moveForwards (uint8_t follow, uint8_t until);
+void moveForwards (uint8_t follow, uint32_t until);
 void turnCorner (uint8_t dir);
 void turnAround (uint8_t dir);
-bool analyseBlock();
+void analyseBlock();
 
 #endif /* MOVE_H */

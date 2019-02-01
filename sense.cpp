@@ -81,7 +81,7 @@ void encoderCountReset() {
  * TRack Green 115-120
  */
 
-int LineSensor() {
+uint8_t lineSensor() {
   int rd = analogRead(A2); 
   delay(20);
   if (rd < 15 && rd > 5) {

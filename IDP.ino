@@ -28,5 +28,31 @@ void setup() {
 }
 
 void loop() {
-
+  /*delay(3000);
+  moveForwards(LEFTWALL, WALL);
+  turnCorner(RIGHTTURN);
+  moveForwards(LEFTWALL, WALL);
+  turnCorner(RIGHTTURN);
+  moveForwards(LEFTWALL, 4500);
+  turnCorner(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(LEFTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(LEFTTURN);
+  moveForwards(NONE, WALL);
+  turnCorner(LEFTTURN);
+  moveForwards(RIGHTWALL, WALL);
+  turnCorner(LEFTTURN);
+  moveForwards(RIGHTWALL, 5000);
+  spinWheels(0,0);
+  delay(99999999);
+  */
+  delay(1000);
+  moveForwards(NONE, 5000);
+  spinWheels(0,0);
+  delay(99999);
 }
