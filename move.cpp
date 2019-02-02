@@ -28,26 +28,26 @@ void spinWheels(int16_t lspd, int16_t rspd) {
 }
 
 //might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc
-bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapSpeed) {
+bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
   if (until == TIMER)
     moveTimer(SET, duration);
   else if (until == DISTANCE)
     encoderRun(RESET);
   for(;;){
-    flapSpeed ? flapSet(millis()%(2*flapSpeed)>flapSpeed ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
+    flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
     //different checks and analyses i.e. a block or end condition met
     if (0 /*detect blocks here*/){
       //do block detection routing or call a function for it
     }
     //determine if conditions for stopping are met
     if (switchFrontBoth() || switchBackBoth())
-      return until == WALL ? true : false; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
-    if (until == DISTANCE){ 
+      return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
+    if (until == DISTANCE) { 
       encoderRun(RUN);
       if ((encoderCount[0] + encoderCount[1])/2*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
         break;
     }
-    if (until == TIMER && !moveTimer(READ, 0));
+    if (until == TIMER && !moveTimer(READ, 0))
       break;
     if (until == LINE && 1/*line not black*/)
       break;

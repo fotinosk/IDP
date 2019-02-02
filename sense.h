@@ -2,8 +2,6 @@
 #define SENSE_H
 
 #include "Arduino.h"
-#include <ArduinoSTL.h>
-#include <vector>
 #include "move.h"
 
 //actions for the encoder

@@ -21,8 +21,8 @@ uint8_t redLEDPin = 0;
 //Function Definitions + all other function definitions
 void initAction() {
   sliderMotor = motorShield.getMotor(3);
-  flapServo.attach(9); //the number is the pin. could be 9,10,11,12 tbd
-  sortServo.attach(10);  //the number is the pin. could be 9,10,11,12 tbd
+  flapServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
+  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   return;
 }

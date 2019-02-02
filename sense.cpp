@@ -3,14 +3,14 @@
 
 //Variable Definitions
 //int color;
-uint8_t switchFrontLeftPin = 2;
-uint8_t switchFrontRightPin = 3;
-uint8_t switchBackLeftPin = 4;
-uint8_t switchBackRightPin = 5;
+uint8_t switchFrontLeftPin = 3;
+uint8_t switchFrontRightPin = 2;
+uint8_t switchBackLeftPin = 5;
+uint8_t switchBackRightPin = 4;
 uint8_t hallSensorPin = 22;
 uint8_t blockDetectPin;//=
-uint8_t leftEncoderPin;//=
-uint8_t rightEncoderPin;//=
+uint8_t leftEncoderPin = 14;//=
+uint8_t rightEncoderPin = 15;//=
 float mmPerEncoder = 8.69;
 
 int32_t encoderCount [2] = {0,0};
@@ -24,6 +24,8 @@ void initSense() {
   pinMode(switchFrontRightPin, INPUT);
   pinMode(hallSensorPin, INPUT);
   pinMode(blockDetectPin, INPUT);
+  //pinMode(leftEncoderPin, INPUT);
+  //pinMode(rightEncoderPin, INPUT);
   return;
 }
 

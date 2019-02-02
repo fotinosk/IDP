@@ -8,8 +8,6 @@
 #include "sense.h"
 #include "action.h"
 #include "timer.h"
-//#include <ArduinoSTL.h>
-//#include <vector>
 #include "utility/Adafruit_MS_PWMServoDriver.h" //not sure what this does yet
 
 //follow
@@ -40,7 +38,7 @@ extern bool spinDirection [2];
 void initMove();
 void spinWheels(int16_t lspd, int16_t rspd); //literally just controlling the motors
 //move w/ end condition. Duration. is ms mm depending on 'until' //returns false if we hit a wall and stopping condition was not wall
-bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t duration = 500, uint16_t flapSpeed = 0); 
+bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t duration = 500, uint16_t flapDelay = 0); 
 
 //Higher level function declarations
 void turnCorner (bool dir);
