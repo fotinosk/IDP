@@ -8,13 +8,13 @@ uint8_t switchFrontRightPin = 3;
 uint8_t switchBackLeftPin = 4;
 uint8_t switchBackRightPin = 5;
 uint8_t hallSensorPin = 22;
-vector<bool> encoder_status = {0,0};
-vector<int> encoder_count = {0,0};
-vector<int> encoder_count_ABS = {0,0};
+uint8_t blockDetectPin;//=
+uint8_t leftEncoderPin;//=
+uint8_t rightEncoderPin;//=
+float mmPerEncoder = 8.69;
 
-
-// encoder thresholds
-vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
+int32_t encoderCount [2] = {0,0};
+uint16_t encoderThreshold[2][2] = {{64,50},{58,40}};
 
 //Function Definitions
 void initSense() {
@@ -23,6 +23,7 @@ void initSense() {
   pinMode(switchBackLeftPin, INPUT);
   pinMode(switchFrontRightPin, INPUT);
   pinMode(hallSensorPin, INPUT);
+  pinMode(blockDetectPin, INPUT);
   return;
 }
 
@@ -45,10 +46,33 @@ bool switchFrontBoth() {
 bool switchBackBoth() {
   return !(digitalRead(switchBackLeftPin) || digitalRead(switchBackRightPin));
 }
-/*
- * Call this program in a loop and it will count the encoder positions, both relative (to motor rotation direction) and the absolute number of ticks
- */
 
+void encoderRun(uint8_t action) {
+  static bool encoderStatus [2] = {0,0};
+  if (action == RESET) {
+    encoderCount[0] = encoderCount[1] = 0;
+    encoderStatus[0] = analogRead(leftEncoderPin) > (encoderThreshold[0][0]+encoderThreshold[0][1])/2 ? 0 : 1;
+    encoderStatus[1] = analogRead(rightEncoderPin)> (encoderThreshold[1][0]+encoderThreshold[1][1])/2 ? 0 : 1;
+    return;
+  }
+  if (encoderStatus[0] && analogRead(leftEncoderPin > encoderThreshold[0][0])) {
+    encoderStatus[0] = false;
+    encoderCount[0] += 2*spinDirection[0] - 1;
+  }
+  else if(encoderStatus[0] && analogRead(leftEncoderPin < encoderThreshold[0][1])){
+    encoderStatus[0] = true;
+    encoderCount[0] += 2*spinDirection[0] - 1;
+  }
+  if (encoderStatus[1] && analogRead(rightEncoderPin > encoderThreshold[1][0])) {
+    encoderStatus[1] = false;
+    encoderCount[1] += 2*spinDirection[1] - 1;
+  }
+  else if(encoderStatus[1] && analogRead(rightEncoderPin < encoderThreshold[1][1])){
+    encoderStatus[1] = true;
+    encoderCount[1] += 2*spinDirection[1] - 1;
+  }
+  return;
+}
 /*void countEncoder() {
 
   for(int i = 0; i < 2; i++)
@@ -73,6 +97,8 @@ void encoderCountReset() {
   encoder_count = {0,0};
   encoder_count_ABS = {0,0};
 } */
+
+
 /*
  * Box Blue 75-85
  * Track Black 9-10
@@ -100,5 +126,9 @@ uint8_t lineSensor() {
 }
 
 bool hallSensor() {
-  return digitalRead(hallSensor);
+  return digitalRead(hallSensorPin);
+}
+
+bool blockDetect() {
+  return digitalRead(blockDetectPin);
 }

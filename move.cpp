@@ -7,7 +7,7 @@ Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
 float lTune = 0.975;
-vector<bool> spinDirection = {1,1};
+bool spinDirection [2] = {1,1};
 
 //Function Definitions
 void initMove() {
@@ -23,31 +23,38 @@ void spinWheels(int16_t lspd, int16_t rspd) {
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
-  spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
+  spinDirection[0] = lspd >= 0;
+  spinDirection[1] = rspd >= 0;
 }
 
 //might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc
-void moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t duration, uint16_t flapSpeed) {
-  until == TIMER ? moveTimer(SET, duration) : 0;
+bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapSpeed) {
+  if (until == TIMER)
+    moveTimer(SET, duration);
+  else if (until == DISTANCE)
+    encoderRun(RESET);
   for(;;){
-    flatSpeed ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    //different checks and analyses ie a block or end condition met
+    flapSpeed ? flapSet(millis()%(2*flapSpeed)>flapSpeed ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
+    //different checks and analyses i.e. a block or end condition met
     if (0 /*detect blocks here*/){
       //do block detection routing or call a function for it
     }
     //determine if conditions for stopping are met
-    if (until == WALL && switchFrontBoth())
-      break;
-    if (until == DISTANCE && 1)
-      break;
+    if (switchFrontBoth() || switchBackBoth())
+      return until == WALL ? true : false; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
+    if (until == DISTANCE){ 
+      encoderRun(RUN);
+      if ((encoderCount[0] + encoderCount[1])/2*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
+        break;
+    }
     if (until == TIMER && !moveTimer(READ, 0));
       break;
     if (until == LINE && 1/*line not black*/)
       break;
-    //actually do requested movement
+    //perform movement
     spinWheels(lspd, rspd);
   }
-  return;
+  return true;
 }
 //high level movement fucntions
 /*this will become super high-level for following walls or doing specific corners or something like that;*/ 
