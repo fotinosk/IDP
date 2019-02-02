@@ -7,7 +7,7 @@
 #define READ 0
 #define SET 1
 #define PAUSE 2
-#define CONTINUE 3
+#define RESUME 3
 
 //Function Definitions + other functions that are required
 void initTimer();
