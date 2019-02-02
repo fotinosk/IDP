@@ -11,10 +11,11 @@ uint8_t hallSensorPin = 22;
 uint8_t blockDetectPin;//=
 uint8_t leftEncoderPin = 14;//=
 uint8_t rightEncoderPin = 15;//=
-float mmPerEncoder = 8.69;
+float mmPerEncoder = 9.48;
 
 int32_t encoderCount [2] = {0,0};
-uint16_t encoderThreshold[2][2] = {{64,50},{58,40}};
+uint16_t encoderThreshold[2][2] = {{64,50},{62,48}};
+bool encoderStatus [2] = {0,0};
 
 //Function Definitions
 void initSense() {
@@ -50,26 +51,26 @@ bool switchBackBoth() {
 }
 
 void encoderRun(uint8_t action) {
-  static bool encoderStatus [2] = {0,0};
+
   if (action == RESET) {
     encoderCount[0] = encoderCount[1] = 0;
     encoderStatus[0] = analogRead(leftEncoderPin) > (encoderThreshold[0][0]+encoderThreshold[0][1])/2 ? 0 : 1;
-    encoderStatus[1] = analogRead(rightEncoderPin)> (encoderThreshold[1][0]+encoderThreshold[1][1])/2 ? 0 : 1;
+    encoderStatus[1] = analogRead(rightEncoderPin) > (encoderThreshold[1][0]+encoderThreshold[1][1])/2 ? 0 : 1;
     return;
   }
-  if (encoderStatus[0] && analogRead(leftEncoderPin > encoderThreshold[0][0])) {
+  if (encoderStatus[0] && analogRead(leftEncoderPin) > encoderThreshold[0][0]) {
     encoderStatus[0] = false;
     encoderCount[0] += 2*spinDirection[0] - 1;
   }
-  else if(encoderStatus[0] && analogRead(leftEncoderPin < encoderThreshold[0][1])){
+  else if(!encoderStatus[0] && analogRead(leftEncoderPin) < encoderThreshold[0][1]){
     encoderStatus[0] = true;
     encoderCount[0] += 2*spinDirection[0] - 1;
   }
-  if (encoderStatus[1] && analogRead(rightEncoderPin > encoderThreshold[1][0])) {
+  if (encoderStatus[1] && analogRead(rightEncoderPin) > encoderThreshold[1][0]) {
     encoderStatus[1] = false;
     encoderCount[1] += 2*spinDirection[1] - 1;
   }
-  else if(encoderStatus[1] && analogRead(rightEncoderPin < encoderThreshold[1][1])){
+  else if(!encoderStatus[1] && analogRead(rightEncoderPin) < encoderThreshold[1][1]){
     encoderStatus[1] = true;
     encoderCount[1] += 2*spinDirection[1] - 1;
   }

@@ -29,9 +29,9 @@ void setup() {
 
 void loop() {
   delay(1000);
-  moveWheels(100, 100, DISTANCE, 50, 1000);
+  moveWheels(100, 100, DISTANCE, 500, 1000);
   spinWheels(0,0);
-  delay(1000);
+  delay(3000);
   
 }
 
