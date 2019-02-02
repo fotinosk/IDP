@@ -28,7 +28,10 @@ void setup() {
 }
 
 void loop() {
-  delay(3000);
+
+}
+
+  /*delay(3000);
   moveForwards(LEFTWALL, WALL);
   turnCorner(RIGHTTURN);
   moveForwards(LEFTWALL, WALL);
@@ -49,7 +52,4 @@ void loop() {
   turnCorner(LEFTTURN);
   moveForwards(RIGHTWALL, 5000);
   spinWheels(0,0);
-  delay(99999999);
- 
-
-}
+  delay(99999999);*/

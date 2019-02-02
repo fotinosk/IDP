@@ -17,7 +17,7 @@ void initMove() {
   return;
 }
 
-//low level movement function
+//low level movement function literally for spinning the wheels.
 void spinWheels(int16_t lspd, int16_t rspd) {
   motorRight->setSpeed((int16_t) abs(rspd)*255/100*rTune);
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
@@ -26,40 +26,33 @@ void spinWheels(int16_t lspd, int16_t rspd) {
   spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
 }
 
-//might need a middle level movement fucniton in here which spins wheels but can also loop and detect block etc
-
-//high level movement fucntions
-/*general high-level function for movement. follow is whether its tracking a wall/line. until is the point at which it breaks out of this function*/
-void moveForwards(uint8_t follow = NONE, uint32_t until = WALL) { 
-  uint16_t flapDelay = 800; //in ms
-  moveTimer(SET, until);
-  for (;;) {
-    long tm = millis();
-    flapSet(tm%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS); //Flap back and forth at flapDelay
-   
-    if (0 /* OR detect blockw tih microswitch*/) {
-      analyseBlock();
+//might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc
+void moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t duration, uint16_t flapSpeed) {
+  until == TIMER ? moveTimer(SET, duration) : 0;
+  for(;;){
+    flatSpeed ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
+    //different checks and analyses ie a block or end condition met
+    if (0 /*detect blocks here*/){
+      //do block detection routing or call a function for it
     }
-    if (until == WALL && switchFrontBoth()) {
+    //determine if conditions for stopping are met
+    if (until == WALL && switchFrontBoth())
       break;
-    }
-    if (until == LINE/* && Line != black() */) {
+    if (until == DISTANCE && 1)
       break;
-    }
-    if (until > 10 && !moveTimer(READ, 0)) {
+    if (until == TIMER && !moveTimer(READ, 0));
       break;
-    }
-    //perform appropriate wheel actions
-    switch (follow) {
-      case NONE: spinWheels(100, 100); break;
-      case RIGHTWALL: spinWheels(100,97); break;
-      case LEFTWALL: spinWheels(97, 100); break;
-    }
+    if (until == LINE && 1/*line not black*/)
+      break;
+    //actually do requested movement
+    spinWheels(lspd, rspd);
   }
   return;
 }
+//high level movement fucntions
+/*this will become super high-level for following walls or doing specific corners or something like that;*/ 
 
-void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really fast if blocks not held in
+void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking
   //sortSet(MIDPOS);
   flapSet(MIDPOS);
@@ -76,7 +69,11 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
   return;
 }
 
-void turnAround (uint8_t dir) {
+void turn90(bool dir) {
+ return; 
+}
+
+void turnAround (bool dir) {
    //sortSet(MIDPOS);
   flapSet(MIDPOS);
   spinWheels(-100,-100);

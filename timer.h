@@ -11,8 +11,6 @@
 
 //Function Definitions + other functions that are required
 void initTimer();
-unsigned long timer();
-void reset_timer();
 
 //bool magnetTimer(bool set, uint32_t dur) ;
 bool moveTimer(bool action, uint32_t dur) ;

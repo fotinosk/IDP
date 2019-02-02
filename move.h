@@ -20,6 +20,8 @@
 #define FOREVER 0
 #define WALL 1
 #define LINE 2
+#define TIMER 3
+#define DISTANCE 4
 //corner option
 #define LEFTTURN 0
 #define RIGHTTURN 1
@@ -37,12 +39,14 @@ extern vector<bool> spinDirection;
 
 //Function Declarations
 void initMove();
-void spinWheels(int16_t rspd, int16_t lspd);
+void spinWheels(int16_t lspd, int16_t rspd); //literally just controlling the motors
+//move w/ end condition. Dur. is ms mm depending on 'until'
+void moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t duration = 500, uint16_t flapSpeed = 0);
 
 //Higher level functions
-void moveForwards (uint8_t follow, uint32_t until);
-void turnCorner (uint8_t dir);
-void turnAround (uint8_t dir);
+void turnCorner (bool dir);
+void turn90 (bool dir);
+void turnAround (bool dir);
 void analyseBlock();
 
 #endif /* MOVE_H */
