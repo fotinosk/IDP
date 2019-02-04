@@ -1,8 +1,49 @@
 import cv2
+import numpy as np
+'''
+def nothing(x):
+    pass
 
-image = cv2.imread("clouds.jpg")
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-cv2.imshow("Over the Clouds", image)
-cv2.imshow("Over the Clouds - gray", gray_image)
-cv2.waitKey(0)
+# Create a black image, a window
+img = np.zeros((300,512,3), np.uint8)
+cv2.namedWindow('image')
+
+# create trackbars for color change
+cv2.createTrackbar('R','image',0,255,nothing)
+cv2.createTrackbar('G','image',0,255,nothing)
+cv2.createTrackbar('B','image',0,255,nothing)
+
+# create switch for ON/OFF functionality
+switch = '0 : OFF \n1 : ON'
+cv2.createTrackbar(switch, 'image',0,1,nothing)
+
+while(1):
+    cv2.imshow('image',img)
+    k = cv2.waitKey(1) & 0xFF
+    if k == 27:
+        break
+
+    # get current positions of four trackbars
+    r = cv2.getTrackbarPos('R','image')
+    g = cv2.getTrackbarPos('G','image')
+    b = cv2.getTrackbarPos('B','image')
+    s = cv2.getTrackbarPos(switch,'image')
+
+    if s == 0:
+        img[:] = 0
+    else:
+        img[:] = [b,g,r]
+
 cv2.destroyAllWindows()
+'''
+green = np.uint8([[[128,0,0]]])
+hsv_green = cv2.cvtColor(green,cv2.COLOR_BGR2HSV)
+print(hsv_green)
+#crimson to marron
+'''
+crimson: [[[126 232 220]]]
+firebrick: [[[120 206 178]]]
+red: [[[120 255 255]]]
+darkred: [[[120 255 139]]]
+maroon: [[[120 255 128]]]
+'''
