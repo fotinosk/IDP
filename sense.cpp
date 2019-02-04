@@ -11,11 +11,12 @@ uint8_t hallSensorPin = 22;
 uint8_t blockDetectPin;//=
 uint8_t leftEncoderPin = 14;//=
 uint8_t rightEncoderPin = 15;//=
+uint8_t rightLineSensorPin = 13;
 float mmPerEncoder = 9.48;
 
 int32_t encoderCount [2] = {0,0};
 uint16_t encoderThreshold[2][2] = {{64,50},{62,48}};
-bool encoderStatus [2] = {0,0};
+
 
 //Function Definitions
 void initSense() {
@@ -51,6 +52,7 @@ bool switchBackBoth() {
 }
 
 void encoderRun(uint8_t action) {
+  static bool encoderStatus [2] = {0,0};
 
   if (action == RESET) {
     encoderCount[0] = encoderCount[1] = 0;
@@ -76,56 +78,9 @@ void encoderRun(uint8_t action) {
   }
   return;
 }
-/*void countEncoder() {
 
-  for(int i = 0; i < 2; i++)
-  {
-    if(encoder_status[i] && analogRead(i) > encoder_threshold[i][0])
-    {
-      encoder_status[i] = false;
-      encoder_count[i] += 2*spinDirection[i] - 1;
-      encoder_count_ABS[i] += 1;
-    }
-    else if(!encoder_status[i] && analogRead(i) < encoder_threshold[i][1])
-    {
-      encoder_status[i] = true;
-      encoder_count[i] += 2*spinDirection[i] - 1;
-      encoder_count_ABS[i] += 1;
-    }
-  }
-  
-}
-
-void encoderCountReset() {
-  encoder_count = {0,0};
-  encoder_count_ABS = {0,0};
-} */
-
-
-/*
- * Box Blue 75-85
- * Track Black 9-10
- * Track Red 100-110
- * Track White 200-215
- * TRack Green 115-120
- */
-
-uint8_t lineSensor() {
-  int rd = analogRead(A2); 
-  delay(20);
-  if (rd < 15 && rd > 5) {
-    return BLACK;  
-
-  }
-  if (rd < 110 && rd > 100) {
-    return RED; 
-  }
-  if (rd < 215 && rd > 200) {
-    return WHITE; 
-  }
-  if (rd < 120 && rd > 115) {
-    return GREEN; 
-  }
+bool lineSensor() {
+  return analogRead(rightLineSensorPin) < 980; // then it detects a line
 }
 
 bool hallSensor() {

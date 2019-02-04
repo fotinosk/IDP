@@ -33,7 +33,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     moveTimer(SET, duration);
   else if (until == DISTANCE)
     encoderRun(RESET);
-  for(;;){
+  while(true) {
     flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
     //different checks and analyses i.e. a block or end condition met
     if (0 /*detect blocks here*/){
@@ -49,7 +49,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     }
     if (until == TIMER && !moveTimer(READ, 0))
       break;
-    if (until == LINE && 1/*line not black*/)
+    if (until == LINE && lineSensor())
       break;
     //perform movement
     spinWheels(lspd, rspd);
@@ -57,7 +57,6 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
   return true;
 }
 //high level movement fucntions
-/*this will become super high-level for following walls or doing specific corners or something like that;*/ 
 
 void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking

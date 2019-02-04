@@ -8,14 +8,6 @@
 #define RESET 0
 #define RUN 1
 
-//colours for the line sensor
-#define BLACK 1
-#define RED 2
-#define WHITE 3
-#define GREEN 4
-
-// using standard cpp libraries
-
 //Variable Declarations
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
@@ -35,7 +27,7 @@ bool switchBackRight();
 bool switchFrontBoth();
 bool switchBackBoth();
 void encoderRun(uint8_t action);
-uint8_t lineSensor();
+bool lineSensor();
 bool hallSensor();
 bool blockDetect();
 
