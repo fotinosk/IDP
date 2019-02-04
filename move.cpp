@@ -34,32 +34,46 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     moveTimer(SET, duration);
   else if (until == DISTANCE)
     encoderRun(RESET);
+
+  // while loop within the moveWheels function. Will break when particular condition is called upon
   while(true) {
     flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
     //different checks and analyses i.e. a block or end condition met
+
+    // lock detection
     if (0 /*detect blocks here*/){
       //do block detection routing or call a function for it
     }
+    
     //determine if conditions for stopping are met
     if (switchFrontBoth() || switchBackBoth())
+      // try break; instead of return until == WALL
       return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
+
+    // if distance (encoder) condition is met
     if (until == DISTANCE) { 
       encoderRun(RUN);
       if ((encoderCount[0] + encoderCount[1])/2*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
         break;
     }
+
+    // if timer condition is met 
     if (until == TIMER && !moveTimer(READ, 0))
       break;
-    Serial.println(lineSensor());
+      
+    // if line sensor condition is met
     if (until == LINE && lineSensor())
       break;
-    //perform movement
+
+      
+    //perform actual movement
     spinWheels(lspd, rspd);
   }
   return true;
 }
-//high level movement fucntions
 
+
+//high level movement fucntions
 void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking
   //sortSet(MIDPOS);
@@ -76,6 +90,8 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
 //  sortSet(RIGHTPOS);
   return;
 }
+
+
 
 void turn90(bool dir) {
  moveWheels(-30, -32, DISTANCE, 120, 0);// back slightly.
@@ -116,4 +132,9 @@ void analyseBlock() {
   return;
 }
 
+// stop motors
+void stopMotors(int stopTime) {
+  spinWheels(0,0);
+  delay(stopTime);
+}
  
