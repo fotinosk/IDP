@@ -28,13 +28,31 @@ void setup() {
 }
 
 void loop() {
+  delay(5000);
   sortSet(RIGHTPOS);
-  moveWheels(0, 50, TIMER, 500, 0);
+  moveWheels(0, 50, TIMER, 300, 0);
   moveWheels(97, 100, WALL, 0, 1000);
   turnCorner(RIGHTTURN);
   moveWheels(97, 100, WALL, 0, 1000);
   turnCorner(RIGHTTURN);
   moveWheels(97, 100, LINE, 0, 1000);
+  turn90(RIGHTTURN);
+  
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(RIGHTTURN);
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(LEFTTURN);
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(RIGHTTURN);
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(LEFTTURN);
+  moveWheels(80, 80, WALL, 0, 0);
+  turnCorner(LEFTTURN);
+  moveWheels(100, 97, WALL, 0, 0);
+  turnCorner(LEFTTURN);
+  moveWheels(50, 48, DISTANCE, 1000, 0);
+  spinWheels(0,0);
+  delay(99999);
   
 }
 

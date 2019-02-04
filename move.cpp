@@ -27,7 +27,8 @@ void spinWheels(int16_t lspd, int16_t rspd) {
   spinDirection[1] = rspd >= 0;
 }
 
-//might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc
+//might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc,
+//make acceleration less brutal to ease it into movement
 bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
   if (until == TIMER)
     moveTimer(SET, duration);
@@ -49,6 +50,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     }
     if (until == TIMER && !moveTimer(READ, 0))
       break;
+    Serial.println(lineSensor());
     if (until == LINE && lineSensor())
       break;
     //perform movement
@@ -76,7 +78,10 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
 }
 
 void turn90(bool dir) {
- return; 
+ moveWheels(-30, -32, DISTANCE, 120, 0);// back slightly.
+ moveWheels(40, 0, DISTANCE, 188, 0); //turn
+ moveWheels(-100,-100, WALL, 0, 0);
+ return;
 }
 
 void turnAround (bool dir) {
