@@ -3,17 +3,20 @@
 
 //Variable Definitions
 //int color;
-uint8_t switchFrontLeftPin = 2;
-uint8_t switchFrontRightPin = 3;
-uint8_t switchBackLeftPin = 4;
-uint8_t switchBackRightPin = 5;
-vector<bool> encoder_status = {0,0};
-vector<int> encoder_count = {0,0};
-vector<int> encoder_count_ABS = {0,0};
+uint8_t switchFrontLeftPin = 3;
+uint8_t switchFrontRightPin = 2;
+uint8_t switchBackLeftPin = 5;
+uint8_t switchBackRightPin = 4;
+uint8_t hallSensorPin = 22;
+uint8_t blockDetectPin;//=
+uint8_t leftEncoderPin = 14;//=
+uint8_t rightEncoderPin = 15;//=
+uint8_t rightLineSensorPin = 13;
+float mmPerEncoder = 9.48;
 
+int32_t encoderCount [2] = {0,0};
+uint16_t encoderThreshold[2][2] = {{64,50},{62,48}};
 
-// encoder thresholds
-vector<vector<int>> encoder_threshold = {{64,50},{58,40}};
 
 //Function Definitions
 void initSense() {
@@ -21,6 +24,10 @@ void initSense() {
   pinMode(switchFrontRightPin, INPUT);
   pinMode(switchBackLeftPin, INPUT);
   pinMode(switchFrontRightPin, INPUT);
+  pinMode(hallSensorPin, INPUT);
+  pinMode(blockDetectPin, INPUT);
+  //pinMode(leftEncoderPin, INPUT);
+  //pinMode(rightEncoderPin, INPUT);
   return;
 }
 
@@ -43,61 +50,43 @@ bool switchFrontBoth() {
 bool switchBackBoth() {
   return !(digitalRead(switchBackLeftPin) || digitalRead(switchBackRightPin));
 }
-/*
- * Call this program in a loop and it will count the encoder positions, both relative (to motor rotation direction) and the absolute number of ticks
- */
 
-/*void countEncoder() {
+void encoderRun(uint8_t action) {
+  static bool encoderStatus [2] = {0,0};
 
-  for(int i = 0; i < 2; i++)
-  {
-    if(encoder_status[i] && analogRead(i) > encoder_threshold[i][0])
-    {
-      encoder_status[i] = false;
-      encoder_count[i] += 2*spinDirection[i] - 1;
-      encoder_count_ABS[i] += 1;
-    }
-    else if(!encoder_status[i] && analogRead(i) < encoder_threshold[i][1])
-    {
-      encoder_status[i] = true;
-      encoder_count[i] += 2*spinDirection[i] - 1;
-      encoder_count_ABS[i] += 1;
-    }
+  if (action == RESET) {
+    encoderCount[0] = encoderCount[1] = 0;
+    encoderStatus[0] = analogRead(leftEncoderPin) > (encoderThreshold[0][0]+encoderThreshold[0][1])/2 ? 0 : 1;
+    encoderStatus[1] = analogRead(rightEncoderPin) > (encoderThreshold[1][0]+encoderThreshold[1][1])/2 ? 0 : 1;
+    return;
   }
-  
+  if (encoderStatus[0] && analogRead(leftEncoderPin) > encoderThreshold[0][0]) {
+    encoderStatus[0] = false;
+    encoderCount[0] += 2*spinDirection[0] - 1;
+  }
+  else if(!encoderStatus[0] && analogRead(leftEncoderPin) < encoderThreshold[0][1]){
+    encoderStatus[0] = true;
+    encoderCount[0] += 2*spinDirection[0] - 1;
+  }
+  if (encoderStatus[1] && analogRead(rightEncoderPin) > encoderThreshold[1][0]) {
+    encoderStatus[1] = false;
+    encoderCount[1] += 2*spinDirection[1] - 1;
+  }
+  else if(!encoderStatus[1] && analogRead(rightEncoderPin) < encoderThreshold[1][1]){
+    encoderStatus[1] = true;
+    encoderCount[1] += 2*spinDirection[1] - 1;
+  }
+  return;
 }
 
-void encoderCountReset() {
-  encoder_count = {0,0};
-  encoder_count_ABS = {0,0};
-} */
-/*
- * Box Blue 75-85
- * Track Black 9-10
- * Track Red 100-110
- * Track White 200-215
- * TRack Green 115-120
- */
+bool lineSensor() {
+  return analogRead(rightLineSensorPin) < 980; // then it detects a line
+}
 
-int LineSensor() {
-  int rd = analogRead(A2); 
-  delay(20);
-  if (rd < 15 && rd > 5) {
-<<<<<<< HEAD
-    //black
-    return BLACK;  
-    //return 1; 
-=======
-    return BLACK;  
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
-  }
-  if (rd < 110 && rd > 100) {
-    return RED; 
-  }
-  if (rd < 215 && rd > 200) {
-    return WHITE; 
-  }
-  if (rd < 120 && rd > 115) {
-    return GREEN; 
-  }
+bool hallSensor() {
+  return digitalRead(hallSensorPin);
+}
+
+bool blockDetect() {
+  return digitalRead(blockDetectPin);
 }

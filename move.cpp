@@ -7,7 +7,7 @@ Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
 float lTune = 0.975;
-vector<bool> spinDirection = {1,1};
+bool spinDirection [2] = {1,1};
 
 //Function Definitions
 void initMove() {
@@ -17,46 +17,50 @@ void initMove() {
   return;
 }
 
-//low level movement function
+//low level movement function literally for spinning the wheels.
 void spinWheels(int16_t lspd, int16_t rspd) {
   motorRight->setSpeed((int16_t) abs(rspd)*255/100*rTune);
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
-  spinDirection = {rspd < 0 ? 0 : 1, lspd < 0 ? 0 : 1};
+  spinDirection[0] = lspd >= 0;
+  spinDirection[1] = rspd >= 0;
 }
 
-//high level movement fucntions
-/*general high-level function for movement. follow is whether its tracking a wall/line. until is the point at which it breaks out of this function*/
-void moveForwards(uint8_t follow = NONE, uint8_t until = WALL) { 
-  
-  uint16_t flapDelay = 5000; //in ms
-  
-  for (;;) {
-    long tm = millis();
-    flapSet(tm%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS); //Flap back and forth at flapDelay
-   
-    if (0 /* OR detect block*/) {
-      //perform block sorting routing here
+//might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc,
+//make acceleration less brutal to ease it into movement
+bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
+  if (until == TIMER)
+    moveTimer(SET, duration);
+  else if (until == DISTANCE)
+    encoderRun(RESET);
+  while(true) {
+    flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
+    //different checks and analyses i.e. a block or end condition met
+    if (0 /*detect blocks here*/){
+      //do block detection routing or call a function for it
     }
-    if (until == WALL && switchFrontBoth()) {
+    //determine if conditions for stopping are met
+    if (switchFrontBoth() || switchBackBoth())
+      return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
+    if (until == DISTANCE) { 
+      encoderRun(RUN);
+      if ((encoderCount[0] + encoderCount[1])/2*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
+        break;
+    }
+    if (until == TIMER && !moveTimer(READ, 0))
       break;
-    }
-    if (until == LINE/* && Line != black() */) {
+    Serial.println(lineSensor());
+    if (until == LINE && lineSensor())
       break;
-    }
-    
-    //perform appropriate wheel actions
-    switch (follow) {
-      case NONE: spinWheels(100, 100); break;
-      case RIGHTWALL: spinWheels(100,97); break;
-      case LEFTWALL: spinWheels(97, 100); break;
-    }
+    //perform movement
+    spinWheels(lspd, rspd);
   }
-  return;
+  return true;
 }
+//high level movement fucntions
 
-void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really fast if blocks not held in
+void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking
   //sortSet(MIDPOS);
   flapSet(MIDPOS);
@@ -66,57 +70,50 @@ void turnCorner(uint8_t dir) { //might need to use timer to flap paddle really f
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-<<<<<<< HEAD
-  delay(700);
+  delay(1100); //700
   spinWheels(100, 100); //so blocks are pushed back again.
-  delay(500);
-  sortSet(RIGHTPOS);
-=======
-  delay(1100);
-  spinWheels(100, 100); //so blocks are pushed back again.
-  delay(100);
-  //sortSet(RIGHTPOS);
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
-  spinWheels(100, 100); //start driving again
-  delay(500);
-  
+  delay(100); //500
+//  sortSet(RIGHTPOS);
   return;
 }
 
-void turnAround (uint8_t dir) {
-<<<<<<< HEAD
-  sortSet(MIDPOS);
-  flapSet(MIDPOS);
-  spinWheels(-100,-100);
-  delay(500);
-  switch (dir) {
-    case RIGHTTURN: spinWheels(-50, 100); break;
-    case LEFTTURN: spinWheels(100, -50); break;
-  }
-  delay(700);
-  spinWheels(100, 100); //so blocks are pushed back again.
-  delay(500);
-  sortSet(RIGHTPOS);
-  spinWheels(100, 100);
-  delay(500);
-  switch (dir) {
-    case RIGHTTURN: spinWheels(-50, 100); break;
-    case LEFTTURN: spinWheels(100, -50); break;
-  }
-  delay(700);
-  spinWheels(100, 100);
-  delay(500);
-  spinWheels(0,0);
-=======
-  //one wehell back
-  //other wheel forwards
-  //crash back and go
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
+void turn90(bool dir) {
+ moveWheels(-30, -32, DISTANCE, 120, 0);// back slightly.
+ moveWheels(40, 0, DISTANCE, 188, 0); //turn
+ moveWheels(-100,-100, WALL, 0, 0);
+ return;
 }
 
-//turn 180 w shift left or right for snaking
-//detect block
- //use a timer to see if magnetic at anypoint
- //set flaps to middle
+void turnAround (bool dir) {
+   //sortSet(MIDPOS);
+  flapSet(MIDPOS);
+  spinWheels(-100,-100);
+  delay(300);
+  spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
+  delay(600);
+  spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
+  delay(3200);
+  spinWheels(-100, -100);
+  while (!switchBackBoth()) {}
+  return;
+
+}
+
+void analyseBlock() {
+  bool magnetic = false;
+  spinWheels(0,0);
+  sortSet(MIDPOS);
+  flapSet(MIDPOS);
+//  magnetTimer(2000, SET);
+  spinWheels(5,5);
+  while (1/*magnetTimer(0, READ)*/) { //while magnet timer is set
+    //if detect a wall do a safety thing here
+    if (hallSensor())
+      magnetic = true;
+      break;
+  }
+  sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+  return;
+}
 
  

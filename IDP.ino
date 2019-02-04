@@ -15,8 +15,8 @@
 #include "test.h"
 
 //Declare global variables
-int period = 1000;
-unsigned long tm = timer();
+//int period = 1000;
+//unsigned long tm = timer();
 
 void setup() {
   initMove();
@@ -24,18 +24,57 @@ void setup() {
   initAction();
   initTimer();
   //initTest();
-  //closeSlider();
-  flapSet(0);
+  Serial.begin(9600);
 }
 
 void loop() {
-<<<<<<< HEAD
-  //spinWheels(50,50);
-  //delay(1000);
+  delay(5000);
+  sortSet(RIGHTPOS);
+  moveWheels(0, 50, TIMER, 300, 0);
+  moveWheels(97, 100, WALL, 0, 1000);
+  turnCorner(RIGHTTURN);
+  moveWheels(97, 100, WALL, 0, 1000);
+  turnCorner(RIGHTTURN);
+  moveWheels(97, 100, LINE, 0, 1000);
+  turn90(RIGHTTURN);
+  
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(RIGHTTURN);
+  moveWheels(100, 100, WALL, 0, 1000);
   turnAround(LEFTTURN);
-  delay(2000);
-=======
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(RIGHTTURN);
+  moveWheels(100, 100, WALL, 0, 1000);
+  turnAround(LEFTTURN);
+  moveWheels(80, 80, WALL, 0, 0);
+  turnCorner(LEFTTURN);
+  moveWheels(100, 97, WALL, 0, 0);
+  turnCorner(LEFTTURN);
+  moveWheels(50, 48, DISTANCE, 1000, 0);
+  spinWheels(0,0);
+  delay(99999);
+  
+}
+
+  /*delay(3000);
+  moveForwards(LEFTWALL, WALL);
+  turnCorner(RIGHTTURN);
+  moveForwards(LEFTWALL, WALL);
+  turnCorner(RIGHTTURN);
+  moveForwards(LEFTWALL, 4500);
+  turnCorner(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(LEFTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(RIGHTTURN);
+  moveForwards(NONE, WALL);
+  turnAround(LEFTTURN);
+  moveForwards(NONE, WALL);
+  turnCorner(LEFTTURN);
   moveForwards(RIGHTWALL, WALL);
   turnCorner(LEFTTURN);
->>>>>>> 8ff912ccf06cd9c42d623e34d0a9eeba7a11beb6
-}
+  moveForwards(RIGHTWALL, 5000);
+  spinWheels(0,0);
+  delay(99999999);*/

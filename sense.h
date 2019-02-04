@@ -1,32 +1,24 @@
-
-
 #ifndef SENSE_H
 #define SENSE_H
 
 #include "Arduino.h"
-#include <ArduinoSTL.h>
-#include <vector>
 #include "move.h"
 
-#define BLACK 1
-#define RED 2
-#define WHITE 3
-#define GREEN 4
-
-// using standard cpp libraries
-using namespace std;
+//actions for the encoder
+#define RESET 0
+#define RUN 1
 
 //Variable Declarations
-extern vector<bool> encoder_status; 
-extern vector<int> encoder_count;
-extern vector<int> encoder_count_ABS;
+extern uint8_t switchFrontLeftPin;
+extern uint8_t switchFrontLeftPin;
+extern uint8_t switchFrontLeftPin;
+extern uint8_t switchFrontLeftPin;
+extern uint8_t hallSensorPin;
+extern uint8_t blockDetectPin;
+extern int32_t encoderCount [2];
+extern float mmPerEncoder;
 
-extern uint8_t switchFrontLeftPin;
-extern uint8_t switchFrontLeftPin;
-extern uint8_t switchFrontLeftPin;
-extern uint8_t switchFrontLeftPin;
-
-//Function Definitions + other functions that are required
+//Function Definitions
 void initSense();
 bool switchFrontLeft();
 bool switchFrontRight();
@@ -34,8 +26,9 @@ bool switchBackLeft();
 bool switchBackRight();
 bool switchFrontBoth();
 bool switchBackBoth();
-void countEncoder();
-void encoderCountReset();
-int LineSensor();
+void encoderRun(uint8_t action);
+bool lineSensor();
+bool hallSensor();
+bool blockDetect();
 
 #endif
