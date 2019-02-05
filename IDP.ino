@@ -28,11 +28,23 @@ void setup() {
 }
 
 void loop() {
-  delay(5000);
-  sortSet(RIGHTPOS);
+  while(!switchFrontRight()){}
+  delay(500);
+
+  /* the stopMotors might seem redundant but it is a good way to see how the robot is actually behaving 
+   *  between movements rather than just running a continous thing. 
+   *  We can always get rid of them later on 
+  */
+  
+  sortSet(RIGHTPOS); // set gate to rightposition
   moveWheels(0, 50, TIMER, 300, 0);
+  stopMotors(1000); 
   moveWheels(97, 100, WALL, 0, 1000);
+  stopMotors(1000);
   turnCorner(RIGHTTURN);
+
+  delay(999999); // test until here for tomorrow's test 
+  
   moveWheels(97, 100, WALL, 0, 1000);
   turnCorner(RIGHTTURN);
   moveWheels(97, 100, LINE, 0, 1000);
