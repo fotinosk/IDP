@@ -45,6 +45,5 @@ void turnCorner (bool dir);
 void turn90 (bool dir);
 void turnAround (bool dir);
 void analyseBlock();
-void stopMotors(int stopTime);
 
 #endif /* MOVE_H */

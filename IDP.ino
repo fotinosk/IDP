@@ -28,65 +28,44 @@ void setup() {
 }
 
 void loop() {
-  while(!switchFrontRight()){}
-  delay(500);
-
-  /* the stopMotors might seem redundant but it is a good way to see how the robot is actually behaving 
-   *  between movements rather than just running a continous thing. 
-   *  We can always get rid of them later on 
-  */
+  //spinWheels(100,100);
+  //delay(1000);
+  //spinWheels(0,0);
   
-  sortSet(RIGHTPOS); // set gate to rightposition
-  moveWheels(0, 50, TIMER, 300, 0);
-  stopMotors(1000); 
-  moveWheels(97, 100, WALL, 0, 1000);
-  stopMotors(1000);
+ while(!switchFrontRight()){}
+  delay(1000);
+ //sortSet(LEFTPOS);
+  moveWheels(0, 100, TIMER, 200, 0);
+  moveWheels(97,100, WALL, 0, 700);
   turnCorner(RIGHTTURN);
-
-  delay(999999); // test until here for tomorrow's test 
-  
-  moveWheels(97, 100, WALL, 0, 1000);
+ // sortSet(LEFTPOS);
+  moveWheels(97,100, WALL, 0, 1000);
   turnCorner(RIGHTTURN);
+  //sortSet(LEFTPOS);
   moveWheels(97, 100, LINE, 0, 1000);
   turn90(RIGHTTURN);
-  
-  moveWheels(100, 100, WALL, 0, 1000);
+  //sortSet(LEFTPOS);
+  moveWheels(100, 100, WALL, 0, 1000); 
   turnAround(RIGHTTURN);
+  sortSet(LEFTPOS);
   moveWheels(100, 100, WALL, 0, 1000);
   turnAround(LEFTTURN);
+  sortSet(LEFTPOS);
   moveWheels(100, 100, WALL, 0, 1000);
   turnAround(RIGHTTURN);
+  sortSet(LEFTPOS);
   moveWheels(100, 100, WALL, 0, 1000);
   turnAround(LEFTTURN);
-  moveWheels(80, 80, WALL, 0, 0);
+  sortSet(LEFTPOS);
+  moveWheels(100, 100, WALL, 0, 0);
   turnCorner(LEFTTURN);
   moveWheels(100, 97, WALL, 0, 0);
   turnCorner(LEFTTURN);
+  sortSet(LEFTPOS);
   moveWheels(50, 48, DISTANCE, 1000, 0);
   spinWheels(0,0);
+  openSlider();
+  moveWheels(80,80, DISTANCE, 900, 0);
   delay(99999);
   
 }
-
-  /*delay(3000);
-  moveForwards(LEFTWALL, WALL);
-  turnCorner(RIGHTTURN);
-  moveForwards(LEFTWALL, WALL);
-  turnCorner(RIGHTTURN);
-  moveForwards(LEFTWALL, 4500);
-  turnCorner(RIGHTTURN);
-  moveForwards(NONE, WALL);
-  turnAround(RIGHTTURN);
-  moveForwards(NONE, WALL);
-  turnAround(LEFTTURN);
-  moveForwards(NONE, WALL);
-  turnAround(RIGHTTURN);
-  moveForwards(NONE, WALL);
-  turnAround(LEFTTURN);
-  moveForwards(NONE, WALL);
-  turnCorner(LEFTTURN);
-  moveForwards(RIGHTWALL, WALL);
-  turnCorner(LEFTTURN);
-  moveForwards(RIGHTWALL, 5000);
-  spinWheels(0,0);
-  delay(99999999);*/
