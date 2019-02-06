@@ -7,8 +7,8 @@ uint8_t switchFrontLeftPin = 3;
 uint8_t switchFrontRightPin = 2;
 uint8_t switchBackLeftPin = 5;
 uint8_t switchBackRightPin = 4;
-uint8_t hallSensorPin = 11;
-uint8_t irSensorPin = 10;//=
+uint8_t hallSensorPin = 6;
+uint8_t irSensorPin = 11;//=
 uint8_t leftEncoderPin = 14;//=
 uint8_t rightEncoderPin = 15;//=
 uint8_t rightLineSensorPin = 13;
@@ -84,7 +84,7 @@ bool lineSensor() {
 }
 
 bool hallSensor() {
-  return digitalRead(hallSensorPin);
+  return !digitalRead(hallSensorPin);
 }
 
 bool irSensor() {

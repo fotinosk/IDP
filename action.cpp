@@ -27,7 +27,7 @@ void initAction() {
   pinMode(redLEDPin,OUTPUT);
   pinMode(amberLEDPin, OUTPUT);
   //Serial.
-  pinMode(7, OUTPUT); // the pin nanded with the IR sensor
+   pinMode(7, OUTPUT); // the pin nanded with the IR sensor
   digitalWrite(7, HIGH);
   return;
 }
