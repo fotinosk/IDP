@@ -51,7 +51,7 @@ void sortSet(uint8_t pos) { //postions are set with the macros LEFTPOS RIGHTPOS 
 void openSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(BACKWARD);
-  delay(4500);
+  delay(4700);
   sliderMotor->setSpeed(0);
   return;
 }

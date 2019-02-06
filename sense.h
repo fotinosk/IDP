@@ -29,6 +29,6 @@ bool switchBackBoth();
 void encoderRun(uint8_t action);
 bool lineSensor();
 bool hallSensor();
-bool blockDetect();
+bool irSensor();
 
 #endif

@@ -38,8 +38,8 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
   while(true) {
     flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
     //different checks and analyses i.e. a block or end condition met
-    if (0 /*detect blocks here*/){
-      //do block detection routing or call a function for it
+    if (irSensor()){
+      analyseBlock();
     }
     //determine if conditions for stopping are met
     if (switchFrontBoth() || switchBackBoth())
@@ -63,6 +63,8 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
 
 void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
   //set flap & gate to blocking
+  spinWheels(0,0);
+  delay(200);
   sortSet(MIDPOS);
   flapSet(MIDPOS);
   spinWheels(-100, -100);
@@ -117,6 +119,7 @@ void turnAround (bool dir) {
 void analyseBlock() {
   bool magnetic = false;
   spinWheels(0,0);
+  delay(1000);
   sortSet(MIDPOS);
   flapSet(MIDPOS);
   magnetTimer(SET, 2000);
@@ -125,12 +128,23 @@ void analyseBlock() {
     if (switchFrontBoth()) {
       moveWheels(-10, -10, TIMER, 600, 0);
     }
+    encoderRun(RUN);
     if (hallSensor())
       magnetic = true;
       break;
   }
   sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+  magnetMoveTimer(SET, 1000);
+  while(magnetMoveTimer(READ, 0)){
+    encoderRun(RUN);
+    spinWheels(80,80);
+  }
+  spinWheels(0,0);
   return;
 }
 
- 
+
+void stopMotors(int seconds) {
+  spinWheels(0,0);
+  delay(seconds);
+}

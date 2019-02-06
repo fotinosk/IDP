@@ -27,6 +27,7 @@ void loop() {
  sortSet(LEFTPOS);
   moveWheels(0, 100, TIMER, 200, 0);
   moveWheels(97,100, WALL, 0, 700);
+
   turnCorner(RIGHTTURN);
   sortSet(LEFTPOS);
   moveWheels(97,100, WALL, 0, 1000);
@@ -55,7 +56,8 @@ void loop() {
   moveWheels(80, 78, DISTANCE, 1000, 0);
   spinWheels(0,0);
   openSlider();
-  moveWheels(80,80, DISTANCE, 500, 0);
+  moveWheels(80,80, DISTANCE, 900, 0);
+  spinWheels(0,0);
   closeSlider();
   delay(99999);
   
