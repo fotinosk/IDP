@@ -14,7 +14,7 @@ extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t switchFrontLeftPin;
 extern uint8_t hallSensorPin;
-extern uint8_t blockDetectPin;
+extern uint8_t irSensorPin;
 extern int32_t encoderCount [2];
 extern float mmPerEncoder;
 

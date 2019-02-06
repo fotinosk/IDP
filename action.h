@@ -11,6 +11,8 @@
 #define LEFTPOS 0
 #define MIDPOS 1
 #define RIGHTPOS 2
+#define ON 1
+#define OFF 0
 
 //Variable Declarations
 extern Servo flapServo;
@@ -24,6 +26,7 @@ extern uint8_t flapLeftPos;
 extern uint8_t flapMidPos;
 extern uint8_t flapRightPos;
 extern uint8_t redLEDPin;
+extern uint8_t amberLEDPin;
 
 //Function Definitions
 void initAction();
@@ -34,7 +37,7 @@ void openSlider();
 void closeSlider();
 
 //Block carrying light
-void redLEDOn();
-void redLEDOff();
+void redLED(bool state);
+void amberLED(bool state);
 
 #endif /* ACTION_H */

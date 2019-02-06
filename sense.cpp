@@ -7,8 +7,8 @@ uint8_t switchFrontLeftPin = 3;
 uint8_t switchFrontRightPin = 2;
 uint8_t switchBackLeftPin = 5;
 uint8_t switchBackRightPin = 4;
-uint8_t hallSensorPin = 22;
-uint8_t blockDetectPin;//=
+uint8_t hallSensorPin = 11;
+uint8_t irSensorPin = 10;//=
 uint8_t leftEncoderPin = 14;//=
 uint8_t rightEncoderPin = 15;//=
 uint8_t rightLineSensorPin = 13;
@@ -25,7 +25,7 @@ void initSense() {
   pinMode(switchBackLeftPin, INPUT);
   pinMode(switchFrontRightPin, INPUT);
   pinMode(hallSensorPin, INPUT);
-  pinMode(blockDetectPin, INPUT);
+  pinMode(irSensorPin, INPUT);
   //pinMode(leftEncoderPin, INPUT);
   //pinMode(rightEncoderPin, INPUT);
   return;
@@ -87,6 +87,6 @@ bool hallSensor() {
   return digitalRead(hallSensorPin);
 }
 
-bool blockDetect() {
-  return digitalRead(blockDetectPin);
+bool irSensor() {
+  return digitalRead(irSensorPin);
 }
