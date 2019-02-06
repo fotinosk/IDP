@@ -26,8 +26,9 @@ void initAction() {
   sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
   pinMode(redLEDPin,OUTPUT);
   pinMode(amberLEDPin, OUTPUT);
-  pinMode(9, OUTPUT); // the pin nanded with the IR sensor
-  digitalWrite(9, LOW);
+  //Serial.
+  pinMode(7, OUTPUT); // the pin nanded with the IR sensor
+  digitalWrite(7, HIGH);
   return;
 }
 

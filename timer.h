@@ -14,5 +14,6 @@ void initTimer();
 
 //bool magnetTimer(bool set, uint32_t dur) ;
 bool moveTimer(bool action, uint32_t dur) ;
+bool magnetTimer(bool aciton, uint32_t dur);
 
 #endif /* TIMER_H */

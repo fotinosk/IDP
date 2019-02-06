@@ -30,6 +30,7 @@ void spinWheels(int16_t lspd, int16_t rspd) {
 //might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc,
 //make acceleration less brutal to ease it into movement
 bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
+  amberLED(abs(lspd)+abs(rspd)!=0?ON:OFF);
   if (until == TIMER)
     moveTimer(SET, duration);
   else if (until == DISTANCE)
@@ -55,6 +56,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     //perform movement
     spinWheels(lspd, rspd);
   }
+  amberLED(OFF);
   return true;
 }
 //high level movement fucntions
@@ -117,10 +119,12 @@ void analyseBlock() {
   spinWheels(0,0);
   sortSet(MIDPOS);
   flapSet(MIDPOS);
-//  magnetTimer(2000, SET);
-  spinWheels(5,5);
-  while (1/*magnetTimer(0, READ)*/) { //while magnet timer is set
-    //if detect a wall do a safety thing here
+  magnetTimer(SET, 2000);
+  spinWheels(3,3);
+  while (magnetTimer(READ, 0)) { //while magnet timer is set
+    if (switchFrontBoth()) {
+      moveWheels(-10, -10, TIMER, 600, 0);
+    }
     if (hallSensor())
       magnetic = true;
       break;
