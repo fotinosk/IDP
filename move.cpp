@@ -35,12 +35,40 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     moveTimer(SET, duration);
   else if (until == DISTANCE)
     encoderRun(RESET);
+
+  bool blockDetected = false;
+  bool magnetDetected = false;
+  int currentEncoderCount;
+  // the actual going forward loop
   while(true) {
-    flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    //different checks and analyses i.e. a block or end condition met
-    if (irSensor()){
-      analyseBlock();
+
+    // move flap when block is not detected. We don't want to accidently push away the block when it is detected
+    if(!blockDetected){
+      flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
     }
+    //different checks and analyses i.e. a block or end condition met
+
+    /*
+     * BLOCK DETCTION SEQUENCE
+     */
+    if (irSensor() && !blockDetected){
+      blockDetected = true;
+      currentEncoderCount = encoderCount[0];
+    }
+
+    // move a bit forward after block detected 
+    if(blockDetected && abs(encoderCount[0] - currentEncoderCount)/mmPerEncoder >= 30) {
+      analyseBlock(magnetDetected);
+      magnetDetect = false;
+    }
+    else if(blockDetected && hallSensor()) {
+      magnetDetected = true;
+    }
+    
+
+    /*
+     * STOPPING CONDITIONS
+     */
     //determine if conditions for stopping are met
     if (switchFrontBoth() || switchBackBoth())
       return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
@@ -53,6 +81,8 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
       break;
     if (until == LINE && lineSensor())
       break;
+
+      
     //perform movement
     spinWheels(lspd, rspd);
   }
@@ -116,14 +146,29 @@ void turnAround (bool dir) {
 
 }
 
-void analyseBlock() {
-  bool magnetic = false;
+void analyseBlock(bool alreadyMagnetic) {
   spinWheels(0,0);
-  delay(1000);
-  sortSet(MIDPOS);
+  sortSet(RIGHTPOS);
   flapSet(MIDPOS);
-  magnetTimer(SET, 2000);
-  spinWheels(3,3);
+  delay(2000); // long delays coming ahead. just there for testing
+
+  spinSheels(60,60);
+  while(irSensor()) {
+    encoderRun(RUN);  
+  }
+  stopMotor(2000);
+
+  while(!switchFrontRight()) {}  // <- this is just for testing convenience. 
+  delay(1000); 
+
+  bool magnetic = false;  
+  if(!alreadyMagnetic)
+  {
+    sortSet(MIDPOS);
+    delay(500);
+  }
+  magnetTimer(SET, 1000);
+  spinWheels(70,70);
   while (magnetTimer(READ, 0)) { //while magnet timer is set
     if (switchFrontBoth()) {
       moveWheels(-10, -10, TIMER, 600, 0);
@@ -133,11 +178,18 @@ void analyseBlock() {
       magnetic = true;
       break;
   }
-  sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
-  magnetMoveTimer(SET, 1000);
-  while(magnetMoveTimer(READ, 0)){
-    encoderRun(RUN);
-    spinWheels(80,80);
+  spinWheels(0,0);
+  while(!switchFrontRight()) {}  // <- this is just for testing convenience. 
+  delay(1000); 
+
+  if(!alreadyMagnetic){
+    sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+    delay(1000); 
+    magnetMoveTimer(SET, 1000);
+    while(magnetMoveTimer(READ, 0)){
+      encoderRun(RUN);
+      spinWheels(80,80);
+    }
   }
   spinWheels(0,0);
   return;

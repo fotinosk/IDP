@@ -44,7 +44,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t durat
 void turnCorner (bool dir);
 void turn90 (bool dir);
 void turnAround (bool dir);
-void analyseBlock();
+void analyseBlock(bool alreadyMagnetic);
 void stopMotors(int seconds);
 
 #endif /* MOVE_H */
