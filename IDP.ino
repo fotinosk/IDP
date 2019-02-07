@@ -11,6 +11,8 @@
 #include "timer.h"
 //#include "test.h"
 
+uint16_t flapDelay = 1000;
+
 void setup() {
   initMove();
   initSense();
@@ -18,6 +20,7 @@ void setup() {
   initTimer();
   //initTest();
   Serial.begin(9600);
+  
 }
 
 void loop() {
@@ -30,22 +33,22 @@ void loop() {
 
   turnCorner(RIGHTTURN);
   sortSet(LEFTPOS);
-  moveWheels(97,100, WALL, 0, 1000);
+  moveWheels(97,100, WALL, 0, flapDelay);
   turnCorner(RIGHTTURN);
   sortSet(LEFTPOS);
-  moveWheels(97, 100, LINE, 0, 1000);
+  moveWheels(97, 100, LINE, 0, flapDelay);
   turn90(RIGHTTURN);
   sortSet(LEFTPOS);
-  moveWheels(100, 100, WALL, 0, 1000); 
+  moveWheels(100, 100, WALL, 0, flapDelay); 
   turnAround(RIGHTTURN);
   sortSet(LEFTPOS);
-  moveWheels(100, 100, WALL, 0, 1000);
+  moveWheels(100, 100, WALL, 0, flapDelay);
   turnAround(LEFTTURN);
   sortSet(LEFTPOS);
-  moveWheels(100, 100, WALL, 0, 1000);
+  moveWheels(100, 100, WALL, 0, flapDelay);
   turnAround(RIGHTTURN);
   sortSet(LEFTPOS);
-  moveWheels(100, 100, WALL, 0, 1000);
+  moveWheels(100, 100, WALL, 0, flapDelay);
   turnAround(LEFTTURN);
   sortSet(LEFTPOS);
   moveWheels(100, 100, WALL, 0, 0);
@@ -56,6 +59,7 @@ void loop() {
   moveWheels(80, 78, DISTANCE, 1000, 0);
   spinWheels(0,0);
   openSlider();
+  redLED(OFF);
   moveWheels(80,80, DISTANCE, 900, 0);
   spinWheels(0,0);
   closeSlider();
