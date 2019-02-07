@@ -6,7 +6,7 @@ Adafruit_MotorShield motorShield = Adafruit_MotorShield();//
 Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
 float rTune = 1;
-float lTune = 1;
+float lTune = 0.974; //this was almost perfectly straighta fter caster adjustment on thursday
 bool spinDirection [2] = {1,1};
 
 //Function Definitions
@@ -27,8 +27,7 @@ void spinWheels(int16_t lspd, int16_t rspd) {
   spinDirection[1] = rspd >= 0;
 }
 
-//might need a middle level movement fucniton in here which spins wheels individually but can also loop and detect block etc,
-//make acceleration less brutal to ease it into movement
+//higher level movement function with its own loop
 bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
   amberLED(abs(lspd)+abs(rspd)!=0?ON:OFF);
   if (until == TIMER)
@@ -37,7 +36,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
 
   bool blockDetected = false;
   bool magnetDetected = false;
-  int currentEncoderCount;
+  int32_t currentEncoderCount;
   // the actual going forward loop
   while(true) {
     //count the encoder
@@ -52,28 +51,23 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
      * BLOCK DETCTION SEQUENCE
      */
     if (irSensor() && !blockDetected){
-      digitalWrite(enableHallSensorPin, LOW); //enable hall sensor
-      Serial.println("detected");
       blockDetected = true;
+      enableHallSensor(); 
+      if (hallSensor())
+        magnetDetected = true;
       currentEncoderCount = encoderCount[0];
     }
     
     // move a bit forward after block detected 
-    if(blockDetected && abs(encoderCount[0] - currentEncoderCount)*mmPerEncoder >= 25) {
+    if(blockDetected && abs(encoderCount[0] - currentEncoderCount)>=2) { // was 30
       analyseBlock(magnetDetected);
       magnetDetected = false;
-      blockDetected = false; //added this -pw
-      digitalWrite(enableHallSensorPin, HIGH); //disablehall sensor
+      blockDetected = false;
+      disableHallSensor();
     }
     else if(blockDetected && hallSensor()) {
       magnetDetected = true;
     }
-
-    else if(blockDetected) {
-      Serial.println(abs(encoderCount[0] - currentEncoderCount)/mmPerEncoder);
-    }
-    
-
     /*
      * STOPPING CONDITIONS
      */
@@ -105,9 +99,7 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
   sortSet(MIDPOS);
   flapSet(MIDPOS);
   spinWheels(-100, -100);
-  //Serial.print("Starting backwards movement");
   delay(380);
-  //Serial.-println("Delay FInished");
   switch (dir) {
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
@@ -161,26 +153,11 @@ void analyseBlock(bool alreadyMagnetic) {
   flapSet(MIDPOS);
   delay(1000); // long delays coming ahead. just there for testing
 
-  spinWheels(60,60);
-  while(irSensor()) {
-    if(hallSensor())
-      magnetic = true;
-    encoderRun(RUN);  
-  }
-
-// to be removed
-  stopMotors(1000); //but keep the stopping
-  //while(!switchFrontRight()) {}  // <- this is just for testing convenience. 
-  delay(2000); 
+  //move 1 cm and test for magnetism in this time
 //
-
-  if(!magnetic)
-  {
-    sortSet(MIDPOS);
-    delay(500);
-  }
-  magnetTimer(SET, 1000);
-  spinWheels(70,70);
+  
+  magnetTimer(SET, 200);
+  spinWheels(30,30);
   while (magnetTimer(READ, 0)) { //while magnet timer is set
     if (switchFrontBoth()) {
       moveWheels(-10, -10, TIMER, 600, 0);
@@ -191,15 +168,14 @@ void analyseBlock(bool alreadyMagnetic) {
       break;
   }
   spinWheels(0,0);
-  //while(!switchFrontRight()) {}  // <- this is just for testing convenience. 
-  delay(1000); 
+  
 
-  if(!alreadyMagnetic){ //if we are keeping the block
+  if(!alreadyMagnetic){ //if we are potentially keeping the block
     sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
     if (!magnetic)
       redLED(ON);
-    delay(1000);
-    magnetMoveTimer(SET, 1000); //move enough to put block in storage
+    delay(1000); 
+    magnetMoveTimer(SET, 450); //move enough to put block in storage
     while(magnetMoveTimer(READ, 0)){
       encoderRun(RUN);
       spinWheels(80,80);

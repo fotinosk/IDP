@@ -9,7 +9,7 @@
 #include "sense.h"
 #include "action.h"
 #include "timer.h"
-//#include "test.h"
+#include "test.h"
 
 uint16_t flapDelay = 1000;
 
@@ -24,9 +24,11 @@ void setup() {
 }
 
 void loop() {
- 
+
  while(!switchFrontRight()){}
   delay(1000);
+  spinWheels(100,100);
+  delay(99999);
  sortSet(LEFTPOS);
   moveWheels(0, 100, TIMER, 200, 0);
   moveWheels(97,100, WALL, 0, 700);
@@ -60,7 +62,7 @@ void loop() {
   spinWheels(0,0);
   openSlider();
   redLED(OFF);
-  moveWheels(80,80, DISTANCE, 900, 0);
+  moveWheels(80,80, DISTANCE, 980, 0);
   spinWheels(0,0);
   closeSlider();
   delay(99999);

@@ -36,6 +36,8 @@ void flapSet(uint8_t pos);
 void sortSet(uint8_t pos);
 void openSlider();
 void closeSlider();
+void enableHallSensor();
+void disableHallSensor();
 
 //Block carrying light
 void redLED(bool state);

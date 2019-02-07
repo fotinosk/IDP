@@ -33,6 +33,7 @@ void initAction() {
   digitalWrite(7, HIGH);
   pinMode(enableHallSensorPin, OUTPUT);
   digitalWrite(enableHallSensorPin, HIGH);
+  sortSet(RIGHTPOS);
   return;
 }
 
@@ -74,4 +75,12 @@ void redLED(bool state) {
 
 void amberLED(bool state) {
   digitalWrite(amberLEDPin, state == ON ? HIGH : LOW);
+}
+
+void enableHallSensor(){
+  digitalWrite(enableHallSensorPin, LOW);
+}
+
+void disableHallSensor() {
+  digitalWrite(enableHallSensorPin, HIGH);
 }
