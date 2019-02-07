@@ -45,13 +45,14 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     // move flap when block is not detected. We don't want to accidently push away the block when it is detected
     if(!blockDetected){
       flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    }
+    } //don't we want to set the flap to middle to ensure not more than one block gets in
     //different checks and analyses i.e. a block or end condition met
 
     /*
      * BLOCK DETCTION SEQUENCE
      */
     if (irSensor() && !blockDetected){
+      digitalWrite(enableHallSensorPin, LOW);
       blockDetected = true;
       currentEncoderCount = encoderCount[0];
     }
@@ -60,6 +61,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     if(blockDetected && abs(encoderCount[0] - currentEncoderCount)/mmPerEncoder >= 30) {
       analyseBlock(magnetDetected);
       magnetDetect = false;
+      digitalWrite(enableHallSensorPin, HIGH);
     }
     else if(blockDetected && hallSensor()) {
       magnetDetected = true;
@@ -156,13 +158,15 @@ void analyseBlock(bool alreadyMagnetic) {
   while(irSensor()) {
     encoderRun(RUN);  
   }
-  stopMotor(2000);
 
+// to be removed
+  stopMotor(2000);
   while(!switchFrontRight()) {}  // <- this is just for testing convenience. 
   delay(1000); 
+//
 
-  bool magnetic = false;  
-  if(!alreadyMagnetic)
+  bool magnetic = alreadyMagnetic;  
+  if(!magnetic)
   {
     sortSet(MIDPOS);
     delay(500);
@@ -184,7 +188,7 @@ void analyseBlock(bool alreadyMagnetic) {
 
   if(!alreadyMagnetic){
     sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
-    delay(1000); 
+    delay(1000);
     magnetMoveTimer(SET, 1000);
     while(magnetMoveTimer(READ, 0)){
       encoderRun(RUN);
@@ -196,7 +200,7 @@ void analyseBlock(bool alreadyMagnetic) {
 }
 
 
-void stopMotors(int seconds) {
+void stopMotors(int mseconds) {
   spinWheels(0,0);
-  delay(seconds);
+  delay(mseconds);
 }

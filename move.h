@@ -45,6 +45,6 @@ void turnCorner (bool dir);
 void turn90 (bool dir);
 void turnAround (bool dir);
 void analyseBlock(bool alreadyMagnetic);
-void stopMotors(int seconds);
+void stopMotors(int mseconds);
 
 #endif /* MOVE_H */

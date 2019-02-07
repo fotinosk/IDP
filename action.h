@@ -27,6 +27,7 @@ extern uint8_t flapMidPos;
 extern uint8_t flapRightPos;
 extern uint8_t redLEDPin;
 extern uint8_t amberLEDPin;
+extern uint8_t enableHallSensorPin;
 
 //Function Definitions
 void initAction();

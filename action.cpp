@@ -18,6 +18,7 @@ uint8_t flapMidPos = 90;
 uint8_t flapRightPos = 60;
 uint8_t redLEDPin = 13;
 uint8_t amberLEDPin = 8;
+uint8_t enableHallSensorPin = 22;
 
 //Function Definitions + all other function definitions
 void initAction() {
@@ -29,6 +30,8 @@ void initAction() {
   //Serial.
    pinMode(7, OUTPUT); // the pin nanded with the IR sensor
   digitalWrite(7, HIGH);
+  pinMode(enableHallSensorPin, OUTPUT);
+  digitalWrite(enableHallSensorPin, HIGH);
   return;
 }
 
