@@ -46,7 +46,7 @@ FRIDAY PROBLEMS:
 slightly less turning on turn around to cover more lane distance each time. we get better block coverage and less chance of crashing awkwardly into back wall and not making it out after 5th pass. - done
 
 need to put the flap in again or make deposition time slightly shorter. For now editing deposition time. Might be worth having an ultra thing flap that only lets in one bloack at the s ame time. 
-
+acceleration for staright only occurs in a specific case when elaving wall
 
 
 T
