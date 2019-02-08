@@ -27,8 +27,6 @@ void loop() {
 
  while(!switchFrontRight()){}
   delay(1000);
-  spinWheels(100,100);
-  delay(99999);
  sortSet(LEFTPOS);
   moveWheels(0, 100, TIMER, 200, 0);
   moveWheels(97,100, WALL, 0, 700);
