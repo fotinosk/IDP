@@ -33,7 +33,7 @@ void initAction() {
   digitalWrite(7, HIGH);
   pinMode(enableHallSensorPin, OUTPUT);
   digitalWrite(enableHallSensorPin, HIGH);
-  sortSet(RIGHTPOS);
+  sortSet(MIDPOS); //set the sort-gate to a default position of centre.
   return;
 }
 

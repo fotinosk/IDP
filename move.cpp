@@ -96,7 +96,6 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
   //set flap & gate to blocking
   spinWheels(0,0);
   delay(200);
-  sortSet(MIDPOS);
   flapSet(MIDPOS);
   spinWheels(-100, -100);
   delay(380);
@@ -107,7 +106,6 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
   delay(1100); //700
   spinWheels(100, 100); //so blocks are pushed back again.
   delay(100); //500
-//  sortSet(RIGHTPOS);
   return;
 }
 
@@ -124,8 +122,6 @@ void turn90(bool dir) { //this function is for turning in open space when we don
 }
 
 void turnAround (bool dir) {
-   //sortSet(MIDPOS);
-  flapSet(MIDPOS);
   spinWheels(-100,-100);
   delay(700);
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
@@ -143,13 +139,11 @@ void turnAround (bool dir) {
   delay(100);
   return;
 
-}
+}//add little backward movment for if magnetic
 
 void analyseBlock(bool alreadyMagnetic) {
-  bool magnetic = alreadyMagnetic;  
-  
+  bool magnetic = alreadyMagnetic;
   spinWheels(0,0);
-  sortSet(RIGHTPOS);
   flapSet(MIDPOS);
   delay(1000); // long delays coming ahead. just there for testing
 
@@ -168,20 +162,26 @@ void analyseBlock(bool alreadyMagnetic) {
       break;
   }
   spinWheels(0,0);
-  
 
-  if(!alreadyMagnetic){ //if we are potentially keeping the block
-    sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
-    if (!magnetic)
-      redLED(ON);
-    delay(1000); 
-    magnetMoveTimer(SET, 450); //move enough to put block in storage
-    while(magnetMoveTimer(READ, 0)){
-      encoderRun(RUN);
-      spinWheels(80,80);
-    }
+  //move the flap and move to process block
+  sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+  delay(1000); 
+  magnetMoveTimer(SET, 450); //move enough to put block in storage
+  while(magnetMoveTimer(READ, 0)){
+    if (hallSensor() && !magnetic){ //if late magnetic detection
+      magnetMoveTimer(PAUSE, 0);
+      spinWheels(-80,80);
+      delay(200);
+      spinWheels(0,0);
+      sortSet(RIGHTPOS);
+      delay(200);
+      magnetMoveTimer(RESUME, 0);
+      }
+    encoderRun(RUN);
+    spinWheels(80,80);
   }
-  sortSet(RIGHTPOS);
+
+  sortSet(MIDPOS); //return flap to default
   spinWheels(0,0);
   return;
 }
