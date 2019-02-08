@@ -110,8 +110,8 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
 }
 
 void turn90(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
- moveWheels(-80, -83, DISTANCE, 120, 0);// back slightly.
- moveWheels(70, 0, DISTANCE, 130, 0); //turn
+ moveWheels(RIGHTTURN?-80:-83,RIGHTPOS?-83:-80, DISTANCE, 120, 0);// back slightly.
+ moveWheels(RIGHTTURN?70:0, RIGHTTURN?0:70, DISTANCE, 130, 0); //turn
  delay(1000);
  moveWheels(-100,-100, WALL, 0, 0); //get on the wall
  while(switchBackBoth()){
