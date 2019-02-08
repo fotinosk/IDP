@@ -38,4 +38,9 @@ For the slider 4200 ms to open the slide. slider(1) -> open
 
 might need to add a timer in the turn function to spam flap instead of setting it
 
+FRIDAY PROBLEMS:
+* seems to always pick up first block no matter what
+* turnaround function sometimes pushes blocks sideways out of the upcoming pass and then it misses them. 
+* new turn function in corner is unreliable if robot is actually too far into the corner. In this case it may be beter to revert to what we had previously.
+
 T
