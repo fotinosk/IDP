@@ -38,4 +38,15 @@ For the slider 4200 ms to open the slide. slider(1) -> open
 
 might need to add a timer in the turn function to spam flap instead of setting it
 
+FRIDAY PROBLEMS:
+* seems to always pick up first block no matter what
+* turnaround function sometimes pushes blocks sideways out of the upcoming pass and then it misses them. 
+* new turn function in corner is unreliable if robot is actually too far into the corner. In this case it may be beter to revert to what we had previously.
+
+slightly less turning on turn around to cover more lane distance each time. we get better block coverage and less chance of crashing awkwardly into back wall and not making it out after 5th pass. - done
+
+need to put the flap in again or make deposition time slightly shorter. For now editing deposition time. Might be worth having an ultra thing flap that only lets in one bloack at the s ame time. 
+acceleration for staright only occurs in a specific case when elaving wall
+
+
 T
