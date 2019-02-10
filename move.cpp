@@ -44,7 +44,10 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     // move flap when block is not detected. We don't want to accidently push away the block when it is detected
     if(!blockDetected){
       flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    } //don't we want to set the flap to middle to ensure not more than one block gets in
+    } 
+    if(blockDetected) {
+      flapSet(millis()%(2*300)>300 ? LEFTPOS : RIGHTPOS);
+    }
     //different checks and analyses i.e. a block or end condition met
 
     /*
@@ -181,7 +184,7 @@ void analyseBlock(bool alreadyMagnetic) {
     encoderRun(RUN);
     spinWheels(80,80);
   }
-  if (magnetic)
+  if (!magnetic)
     redLED(ON);
   sortSet(MIDPOS); //return flap to default
   spinWheels(0,0);
