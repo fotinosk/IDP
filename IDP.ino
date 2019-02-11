@@ -25,16 +25,26 @@ void setup() {
 }
 
 void loop() {
-
+  /*
+Serial.println("startin code");
  while(!switchFrontRight()){}
-  delay(1000);
+ while(switchFrontRight()){}
+ Serial.println("setting motors to spin");
+ delay(1000);
+ spinWheels(100,100);
+*/
+ 
+ 
+ while(!switchFrontRight()){}
+ while(switchFrontRight()){}
+ delay(1000);
   moveWheels(0, 100, TIMER, 200, 0);          //Initial slight turn
   moveWheels(97,100, WALL, 0, 700);           //Left wall
   turnCorner(RIGHTTURN);                      //First Corner
   moveWheels(97,100, WALL, 0, flapDelay);     //Back wall
   turnCorner(RIGHTTURN);                      //Second Corner  
   moveWheels(97, 100, LINE, 0, flapDelay);    //Right wall until line
-  turn90(RIGHTTURN);                          //Turn to first pass
+  turn90(RIGHTTURN);                           //Turn to first pass
   moveWheels(100, 100, WALL, 0, flapDelay);   //First pass (on line)
   turnAround(RIGHTTURN);                      //Turn to second pass
   moveWheels(100, 100, WALL, 0, flapDelay);   //Second pass
