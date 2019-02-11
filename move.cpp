@@ -101,7 +101,7 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
   delay(200);
   flapSet(MIDPOS);
   spinWheels(-100, -100);
-  delay(380);
+  delay(410);
   switch (dir) {
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
@@ -113,10 +113,11 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
 }
 
 void turn90(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
- moveWheels(dir? -80 : -83 ,dir? -83: -80, DISTANCE, 120, 0);// back slightly.  if dir== (RIGHTTURN = TRUE)
+ moveWheels(dir? -80 : -83 ,dir? -83: -80, DISTANCE, 180, 0);// back slightly.  if dir== (RIGHTTURN = TRUE)
  moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
  delay(1000);
  moveWheels(-100,-100, WALL, 0, 0); //get on the wall
+ delay(500);
  while(switchBackBoth()){
   spinWheels(80,80);
  }
@@ -134,6 +135,7 @@ void turnAround (bool dir) {
   
   spinWheels(-100, -100);
   while (!switchBackBoth()) {}
+  delay(500);
   spinWheels(0,0);
   delay(100);
   while(switchBackBoth()) {
@@ -141,6 +143,7 @@ void turnAround (bool dir) {
   }
   delay(100);
   spinWheels(60,60);
+  delay(300);
   return;
 
 }//add little backward movment for if magnetic
