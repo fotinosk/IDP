@@ -44,7 +44,10 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     // move flap when block is not detected. We don't want to accidently push away the block when it is detected
     if(!blockDetected){
       flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    } //don't we want to set the flap to middle to ensure not more than one block gets in
+    } 
+    if(blockDetected) {
+      flapSet(millis()%(2*300)>300 ? LEFTPOS : RIGHTPOS);
+    }
     //different checks and analyses i.e. a block or end condition met
 
     /*
@@ -72,10 +75,10 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
      * STOPPING CONDITIONS
      */
     //determine if conditions for stopping are met
-    if (switchFrontBoth() || switchBackBoth())
+    if (until == WALL && (switchFrontBoth() || switchBackBoth()))
       return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
     if (until == DISTANCE) { 
-      if (abs((encoderCount[0] + encoderCount[1])/2*mmPerEncoder) >= duration)//encoder counts are averaged to give central distance
+      if (abs((encoderCount[0] + encoderCount[1])/2)*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
         break;
     }
     if (until == TIMER && !moveTimer(READ, 0))
@@ -110,8 +113,8 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
 }
 
 void turn90(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
- moveWheels(RIGHTTURN?-80:-83,RIGHTPOS?-83:-80, DISTANCE, 120, 0);// back slightly.
- moveWheels(RIGHTTURN?70:0, RIGHTTURN?0:70, DISTANCE, 130, 0); //turn
+ moveWheels(dir? -80 : -83 ,dir? -83: -80, DISTANCE, 120, 0);// back slightly.  if dir== (RIGHTTURN = TRUE)
+ moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
  delay(1000);
  moveWheels(-100,-100, WALL, 0, 0); //get on the wall
  while(switchBackBoth()){
@@ -127,16 +130,17 @@ void turnAround (bool dir) {
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
   delay(600);*/
   spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
-  delay(3970);
+  delay(3960); //was 3970
   
   spinWheels(-100, -100);
   while (!switchBackBoth()) {}
   spinWheels(0,0);
   delay(100);
   while(switchBackBoth()) {
-    spinWheels(40,40);
+    spinWheels(30,30);
   }
   delay(100);
+  spinWheels(60,60);
   return;
 
 }//add little backward movment for if magnetic
@@ -154,7 +158,7 @@ void analyseBlock(bool alreadyMagnetic) {
   spinWheels(30,30);
   while (magnetTimer(READ, 0)) { //while magnet timer is set
     if (switchFrontBoth()) {
-      moveWheels(-10, -10, TIMER, 600, 0);
+      moveWheels(-10, -10, TIMER, 600, 0); //or some other emergency maneuver
     }
     encoderRun(RUN);
     if (hallSensor())
@@ -164,13 +168,13 @@ void analyseBlock(bool alreadyMagnetic) {
   spinWheels(0,0);
 
   //move the flap and move to process block
-  sortSet(magnetic ? RIGHTPOS : LEFTPOS); //will need to remember the position so it can return to it after a corner.
+  sortSet(magnetic ? RIGHTPOS : LEFTPOS);
   delay(1000); 
-  magnetMoveTimer(SET, 450); //move enough to put block in storage
+  magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
       magnetMoveTimer(PAUSE, 0);
-      spinWheels(-80,80);
+      spinWheels(-80,-80);
       delay(200);
       spinWheels(0,0);
       sortSet(RIGHTPOS);
@@ -180,7 +184,8 @@ void analyseBlock(bool alreadyMagnetic) {
     encoderRun(RUN);
     spinWheels(80,80);
   }
-
+  if (!magnetic)
+    redLED(ON);
   sortSet(MIDPOS); //return flap to default
   spinWheels(0,0);
   return;
