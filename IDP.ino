@@ -25,20 +25,12 @@ void setup() {
 }
 
 void loop() {
-  /*
-Serial.println("startin code");
- while(!switchFrontRight()){}
- while(switchFrontRight()){}
- Serial.println("setting motors to spin");
- delay(1000);
- spinWheels(100,100);
-*/
- 
- while(!switchFrontRight()){}
+  
+  while(!switchFrontRight()){}
   while(switchFrontRight()){}
   delay(1000);
   
-  moveWheels(0, 100, TIMER, 200, 0);          Serial.println("Initial slight turn");
+  moveWheels(0, 100, TIMER, 200, 0);           Serial.println("Initial slight turn");
   moveWheels(97,100, WALL, 0, 700);            Serial.println("Left wall");
   turnCorner(RIGHTTURN);                       Serial.println("First Corner");
   moveWheels(97,100, WALL, 0, flapDelay);      Serial.println("Back wall");
@@ -55,22 +47,25 @@ Serial.println("startin code");
   moveWheels(100, 100, WALL, 0, flapDelay);    Serial.println("Fourth pass");
   turnCorner(LEFTTURN);                        Serial.println("Turn to fifth pass - but go into wall instead");
   spinWheels(-100,0); delay(400);
-  moveWheels(100, 100, WALL, 0, 0);             Serial.println("Drive into wall - back right corner");
+  moveWheels(100, 100, WALL, 0, 0);            Serial.println("Drive into wall - back right corner");
   spinWheels(0,0); delay(1000);
   moveWheels(-100,-100,TIMER, 400, 0);
   spinWheels(0,0); delay(1000);
-  turn90(LEFTTURN);                             Serial.println("Turn to fifth pass w/ turn90 function");
-  moveWheels(100, 100, WALL, 0, flapDelay);             Serial.println("Fifth pass");
-  turnCorner(LEFTTURN);                         Serial.println("Turn back onto leftwall");
-  moveWheels(100, 97, WALL, 0, 0);              Serial.println("drive back to start wall");
-  turnCorner(LEFTTURN);                         Serial.println("turn towards safe box");
-  moveWheels(80, 78, DISTANCE, 1000, 0);  Serial.println("move into safe box");
-  spinWheels(0,0);                                Serial.println("stop");
-  openSlider();                                   Serial.println("open slider");
-  redLED(OFF);                                    Serial.println("turn off red LED as no longer carrying blocks");
-  moveWheels(80,80, DISTANCE, 900, 0);            Serial.println("move into end box");
-  spinWheels(0,0);                                Serial.println("close slider");
+  turn90(LEFTTURN);                            Serial.println("Turn to fifth pass w/ turn90 function");
+  moveWheels(100, 100, WALL, 0, flapDelay);    Serial.println("Fifth pass");
+  turnCorner(LEFTTURN);                        Serial.println("Turn back onto leftwall");
+  moveWheels(100, 97, WALL, 0, 0);             Serial.println("drive back to start wall");
+  turnCorner(LEFTTURN);                        Serial.println("turn towards safe box");
+  moveWheels(80, 78, DISTANCE, 1000, 0);       Serial.println("move into safe box");
+  spinWheels(0,0);                             Serial.println("stop");
+  openSlider();                                Serial.println("open slider");
+  redLED(OFF);                                 Serial.println("turn off red LED as no longer carrying blocks");
+  moveWheels(80,80, WALL, 900, 0);             Serial.println("move into end box");
+  spinWheels(0,0);                             Serial.println("close slider");
+  delay(500);
+  spinWheels(-100,-100)
+  delay(700);
+  spinWheels(0,0);
   closeSlider();
   delay(99999);
-  
 }
