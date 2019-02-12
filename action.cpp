@@ -11,11 +11,13 @@ Servo flapServo;
 Servo sortServo;
 Adafruit_DCMotor *sliderMotor;
 uint8_t sortLeftPos = 170; //tbd
-uint8_t sortMidPos = 118;
+uint8_t sortMidPos = 115;
 uint8_t sortRightPos = 60;
 uint8_t flapLeftPos = 120;
 uint8_t flapMidPos = 90;
 uint8_t flapRightPos = 60;
+uint8_t sortLeftUnjam = 130;
+uint8_t sortRightUnjam = 87;
 uint8_t redLEDPin = 13;
 uint8_t amberLEDPin = 8;
 uint8_t enableHallSensorPin = 24;
@@ -50,13 +52,15 @@ void sortSet(uint8_t pos) { //postions are set with the macros LEFTPOS RIGHTPOS 
     case 0: sortServo.write(sortLeftPos); break;
     case 1: sortServo.write(sortMidPos); break;
     case 2: sortServo.write(sortRightPos); break;
+    case 3: sortServo.write(sortLeftUnjam); break;
+    case 4: sortServo.write(sortRightUnjam); break;
   }
   return;
 }
 void openSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(BACKWARD);
-  delay(4700);
+  delay(4550);
   sliderMotor->setSpeed(0);
   return;
 }
@@ -64,7 +68,7 @@ void openSlider() {
 void closeSlider() {
   sliderMotor->setSpeed(255);
   sliderMotor->run(FORWARD);
-  delay(4700);
+  delay(4600);
   sliderMotor->setSpeed(0);
   return;
 }

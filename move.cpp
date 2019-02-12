@@ -118,14 +118,21 @@ void turn90(bool dir) { //this function is for turning in open space when we don
  moveWheels(dir? -80 : -83 ,dir? -83: -80, DISTANCE, 180, 0);// back slightly.  if dir== (RIGHTTURN = TRUE)
  moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
  delay(1000);
- moveWheels(-100,-100, WALL, 0, 0); //get on the wall
+ unsigned long waitTime = millis();
+ spinWheels(-100, -100);
+ while(millis() - waitTime < 9000) {
+  if(switchBackBoth()) {
+    break;
+  }
+ }
+ //moveWheels(-100,-100, TIMER, , 0); //get on the wall
  delay(500);
  resetJam();
  return;
 }
 
 void turn90WithoutReverse(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
- moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
+ moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 150, 0); //turn   - if dir== (RIGHTTURN = TRUE) was 130
  delay(1000);
  moveWheels(-100,-100, WALL, 0, 0); //get on the wall
  delay(500);
@@ -140,10 +147,20 @@ void turnAround (bool dir) {
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
   delay(600);*/
   spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
-  delay(3950); //was 3970
-  
+  delay(3970); //was 3970
+  stopMotors(10);
+  flapSet(RIGHTPOS);
+  delay(100);
   spinWheels(-100, -100);
-  while (!switchBackBoth()) {}
+  while (!switchBackBoth()) {
+    if(switchBackRight()) {
+      spinWheels(-100,-50);
+    }
+    if(switchBackLeft()) {
+      spinWheels(-50, -100);
+    }
+
+  }
   delay(400);
   resetJam();
   return;
@@ -174,7 +191,7 @@ void analyseBlock(bool alreadyMagnetic) {
   //move the flap and move to process block
   sortSet(magnetic ? RIGHTPOS : LEFTPOS);
   delay(200);  // 200
-  magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
+  magnetMoveTimer(SET, 380); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
       magnetMoveTimer(PAUSE, 0);

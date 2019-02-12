@@ -20,5 +20,6 @@ void testMotors();
 void testFlap();
 void testSort();
 void testSlider();
+void testUnjam();
 
 #endif /* TEST_H */

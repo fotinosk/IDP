@@ -88,6 +88,27 @@ void testSort() {
     delay(1000);
 }
 
+void testUnjam() {
+    sortSet(LEFTUNJAM);
+    delay(1500);
+    sortSet(RIGHTUNJAM);
+    delay(1500);
+    sortSet(MIDPOS);
+    delay(1500);
+    sortSet(LEFTUNJAM);
+    delay(1500);
+    sortSet(RIGHTUNJAM);
+    delay(1500);
+    sortSet(MIDPOS);
+    delay(1500);
+    sortSet(LEFTUNJAM);
+    delay(1500);
+    sortSet(RIGHTUNJAM);
+    delay(1500);
+    sortSet(MIDPOS);
+    delay(1500);
+}
+
 void testSlider() {
   openSlider();
   delay(1000);
