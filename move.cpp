@@ -124,6 +124,16 @@ void turn90(bool dir) { //this function is for turning in open space when we don
  return;
 }
 
+void turn90WithoutReverse(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
+ moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
+ delay(1000);
+ moveWheels(-100,-100, WALL, 0, 0); //get on the wall
+ delay(500);
+ resetJam();
+ return;
+}
+
+
 void turnAround (bool dir) {
   spinWheels(-100,-100);
   delay(700);

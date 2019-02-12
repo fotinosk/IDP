@@ -28,14 +28,19 @@ void loop() {
   while(!switchFrontRight()){}
   while(switchFrontRight()){}
   delay(200);
-  
+  /*
   moveWheels(0, 100, TIMER, 200, 0);           Serial.println("Initial slight turn");
   moveWheels(95,100, WALL, 0, flapDelay);            Serial.println("Left wall");
-  turnCorner(RIGHTTURN);                       Serial.println("First Corner");
-  moveWheels(95,100, WALL, 0, flapDelay);      Serial.println("Back wall");
-  turnCorner(RIGHTTURN);                       Serial.println("Second Corner  ");
-  moveWheels(97, 100, LINE, 0, flapDelay);     Serial.println("Right wall until line");
-  turn90(RIGHTTURN);                           Serial.println("Turn to first pass");
+  turnCorner(RIGHTTURN);                         Serial.println("First Corner");
+  */
+  moveWheels(95,100, WALL, 0, flapDelay);        Serial.println("Back wall");
+  turnCorner(RIGHTTURN);                         Serial.println("Second Corner  ");
+  moveWheels(97, 100, DISTANCE, 450, flapDelay); Serial.println("Right wall until line");
+  stopMotors(500); 
+  flapSet(MIDPOS); // set flap to midpos so blocks don't go inside
+  delay(200);
+  moveWheels(97, 100, DISTANCE, 300, 0);       Serial.println("Right wall until line");
+  turn90WithoutReverse(RIGHTTURN);             Serial.println("Turn to first pass");
   moveWheels(100, 100, WALL, 0, flapDelay);    Serial.println("First pass (on line)");
   turnAround(RIGHTTURN);                       Serial.println("Turn to second pass");
   moveWheels(100, 100, WALL, 0, flapDelay);    Serial.println("Second pass");

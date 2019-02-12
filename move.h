@@ -43,6 +43,7 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until = WALL, uint32_t durat
 //Higher level function declarations
 void turnCorner (bool dir);
 void turn90 (bool dir);
+void turn90WithoutReverse (bool dir);
 void turnAround (bool dir);
 void analyseBlock(bool alreadyMagnetic);
 void stopMotors(int mseconds);
