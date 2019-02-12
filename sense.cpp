@@ -15,7 +15,7 @@ uint8_t rightLineSensorPin = 13;
 float mmPerEncoder = 9.48;
 
 int32_t encoderCount [2] = {0,0};
-uint16_t encoderThreshold[2][2] = {{64,50},{62,48}};
+uint16_t encoderThreshold[2][2] = {{66,52},{65,55}};
 
 
 //Function Definitions

@@ -41,6 +41,8 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
   while(true) {
     //count the encoder
     encoderRun(RUN);
+
+    Serial.print(encoderCount[0]); Serial.print("  "); Serial.println(encoderCount[1]);
     // move flap when block is not detected. We don't want to accidently push away the block when it is detected
     if(!blockDetected){
       flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
@@ -128,7 +130,7 @@ void turnAround (bool dir) {
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
   delay(600);*/
   spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
-  delay(4000); //was 3970
+  delay(3950); //was 3970
   
   spinWheels(-100, -100);
   while (!switchBackBoth()) {}
@@ -142,8 +144,7 @@ void analyseBlock(bool alreadyMagnetic) {
   bool magnetic = alreadyMagnetic;
   spinWheels(0,0);
   flapSet(MIDPOS);
-  delay(150); // <-- WE DEF NEED THIS DELAY!! JUST KEEEEEEP ITTTTT
-
+  delay(200); // <-- WE DEF NEED THIS DELAY!! JUST KEEEEEEP ITTTTT
   //move 1 cm and test for magnetism in this time
 //
   
@@ -162,7 +163,7 @@ void analyseBlock(bool alreadyMagnetic) {
 
   //move the flap and move to process block
   sortSet(magnetic ? RIGHTPOS : LEFTPOS);
-  delay(200); 
+  delay(200);  // 200
   magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
