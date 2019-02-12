@@ -118,10 +118,7 @@ void turn90(bool dir) { //this function is for turning in open space when we don
  delay(1000);
  moveWheels(-100,-100, WALL, 0, 0); //get on the wall
  delay(500);
- while(switchBackBoth()){
-  spinWheels(80,80);
- }
- delay(100);
+ resetJam();
  return;
 }
 
@@ -131,19 +128,12 @@ void turnAround (bool dir) {
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
   delay(600);*/
   spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
-  delay(3960); //was 3970
+  delay(4000); //was 3970
   
   spinWheels(-100, -100);
   while (!switchBackBoth()) {}
-  delay(500);
-  spinWheels(0,0);
-  delay(100);
-  while(switchBackBoth()) {
-    spinWheels(30,30);
-  }
-  delay(100);
-  spinWheels(60,60);
-  delay(300);
+  delay(400);
+  resetJam();
   return;
 
 }//add little backward movment for if magnetic
@@ -152,12 +142,12 @@ void analyseBlock(bool alreadyMagnetic) {
   bool magnetic = alreadyMagnetic;
   spinWheels(0,0);
   flapSet(MIDPOS);
-  delay(1000); // long delays coming ahead. just there for testing
+  delay(150); // <-- WE DEF NEED THIS DELAY!! JUST KEEEEEEP ITTTTT
 
   //move 1 cm and test for magnetism in this time
 //
   
-  magnetTimer(SET, 200);
+  magnetTimer(SET, 220); // was 200
   spinWheels(30,30);
   while (magnetTimer(READ, 0)) { //while magnet timer is set
     if (switchFrontBoth()) {
@@ -172,7 +162,7 @@ void analyseBlock(bool alreadyMagnetic) {
 
   //move the flap and move to process block
   sortSet(magnetic ? RIGHTPOS : LEFTPOS);
-  delay(1000); 
+  delay(200); 
   magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
@@ -199,3 +189,17 @@ void stopMotors(int mseconds) {
   spinWheels(0,0);
   delay(mseconds);
 }
+
+void resetJam() {
+  flapSet(MIDPOS); // NEW STUFF
+  sortSet(LEFTPOS); // NEW STUFF
+  while(switchBackBoth()){
+  spinWheels(60,60);
+  }
+  delay(100);
+  moveWheels(80,80, DISTANCE, 30, 0); // NEW STUFF
+  sortSet(RIGHTPOS);
+  moveWheels(80,80, DISTANCE, 30, 0); // NEW STUFF
+  sortSet(MIDPOS);
+}
+
