@@ -108,9 +108,9 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-  delay(1100); //700
+  delay(1150); //700
   spinWheels(100, 100); //so blocks are pushed back again.
-  delay(100); //500
+  delay(150); //500
   return;
 }
 
@@ -134,7 +134,14 @@ void turn90(bool dir) { //this function is for turning in open space when we don
 void turn90WithoutReverse(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
  moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 150, 0); //turn   - if dir== (RIGHTTURN = TRUE) was 130
  delay(1000);
- moveWheels(-100,-100, WALL, 0, 0); //get on the wall
+ unsigned long waitTime = millis();
+ spinWheels(-100, -100);
+ while(millis() - waitTime < 9000) {
+  if(switchBackBoth()) {
+    break;
+  }
+ }
+ //moveWheels(-100,-100, TIMER, , 0); //get on the wall
  delay(500);
  resetJam();
  return;
@@ -143,7 +150,7 @@ void turn90WithoutReverse(bool dir) { //this function is for turning in open spa
 
 void turnAround (bool dir) {
   spinWheels(-100,-100);
-  delay(700);
+  delay(680); // was 700
  /* spinWheels(dir == LEFTTURN ? -100 : 0, dir == LEFTTURN ? 0 : -100);
   delay(600);*/
   spinWheels(dir == LEFTTURN ? 0 : 100, dir == LEFTTURN ? 100 : 0);
@@ -151,16 +158,20 @@ void turnAround (bool dir) {
   stopMotors(10);
   flapSet(RIGHTPOS);
   delay(100);
+
+  unsigned long waitTime = millis();
   spinWheels(-100, -100);
-  while (!switchBackBoth()) {
+  while (!switchBackBoth() && millis() - waitTime < 9000) {
     if(switchBackRight()) {
-      spinWheels(-100,-50);
+      spinWheels(-100,-20);
     }
     if(switchBackLeft()) {
-      spinWheels(-50, -100);
+      spinWheels(-20, -100);
     }
 
   }
+  
+  spinWheels(-100,-100);
   delay(400);
   resetJam();
   return;
@@ -191,7 +202,7 @@ void analyseBlock(bool alreadyMagnetic) {
   //move the flap and move to process block
   sortSet(magnetic ? RIGHTPOS : LEFTPOS);
   delay(200);  // 200
-  magnetMoveTimer(SET, 380); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
+  magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
       magnetMoveTimer(PAUSE, 0);
