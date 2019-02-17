@@ -1,16 +1,12 @@
-/* Controlling servos and other 'action' functionality on the robot
- *  
- *  The servos turn at 180* in 600ms. Just something to bear in mind
-*/
+/* Controlling servos and other 'action' functionality on the robot*/
 
-//Include - only the one here. others are in the header file.
 #include "action.h"
 
 //Variable Definitions
 Servo flapServo;
 Servo sortServo;
 Adafruit_DCMotor *sliderMotor;
-uint8_t sortLeftPos = 170; //tbd
+uint8_t sortLeftPos = 170;
 uint8_t sortMidPos = 115;
 uint8_t sortRightPos = 60;
 uint8_t flapLeftPos = 120;
@@ -22,11 +18,11 @@ uint8_t redLEDPin = 13;
 uint8_t amberLEDPin = 8;
 uint8_t enableHallSensorPin = 24;
 
-//Function Definitions + all other function definitions
+//Function Definitions
 void initAction() {
   sliderMotor = motorShield.getMotor(3);
-  flapServo.attach(10); //the number is the pin. could be 9,10,11,12 tbd
-  sortServo.attach(9);  //the number is the pin. could be 9,10,11,12 tbd
+  flapServo.attach(10);
+  sortServo.attach(9);
   pinMode(redLEDPin,OUTPUT);
   pinMode(amberLEDPin, OUTPUT);
   digitalWrite(redLEDPin, LOW);
