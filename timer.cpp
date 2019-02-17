@@ -1,12 +1,11 @@
-//Include - only the one here. others are in the header file.
+/*-This file contains the 3 timing functions used within the program-*/
 #include "timer.h"
 
-//Multiple timers will have to be made (eg move_timer etc) from the same framework
 
-//Function Definitions + all other function definitions
-void initTimer() {
-  return;
-}
+/* Once SET, the timer returns true while the timer
+ * is still within the given time and
+ * false once the timer has expired
+ */
 
 bool moveTimer(bool action, uint32_t dur) {
   static long unsigned endTime = 0;

@@ -19,23 +19,22 @@ uint8_t amberLEDPin = 8;
 uint8_t enableHallSensorPin = 24;
 
 //Function Definitions
-void initAction() {
+void initAction() { //Initialistaion for functionality relating to the action.cpp file
   sliderMotor = motorShield.getMotor(3);
   flapServo.attach(10);
   sortServo.attach(9);
   pinMode(redLEDPin,OUTPUT);
   pinMode(amberLEDPin, OUTPUT);
   digitalWrite(redLEDPin, LOW);
-  //Serial.
-   pinMode(7, OUTPUT); // the pin nanded with the IR sensor
+  pinMode(7, OUTPUT); // the pin nanded with the IR sensor
   digitalWrite(7, HIGH);
   pinMode(enableHallSensorPin, OUTPUT);
   digitalWrite(enableHallSensorPin, HIGH);
-  sortSet(MIDPOS); //set the sort-gate to a default position of centre.
+  sortSet(MIDPOS);
   return;
 }
 
-void flapSet(uint8_t pos) { // 0 - 1 - 2 for positions
+void flapSet(uint8_t pos) { // set the position of the flapper at the front of the robot
   switch (pos) {
     case 0: flapServo.write(flapLeftPos); break;
     case 1: flapServo.write(flapMidPos); break;
@@ -43,7 +42,7 @@ void flapSet(uint8_t pos) { // 0 - 1 - 2 for positions
   }
   return;
 }
-void sortSet(uint8_t pos) { //postions are set with the macros LEFTPOS RIGHTPOS and MIDPOS. For sort RIGHTPOS = reject - might change this to be more verbose
+void sortSet(uint8_t pos) { //postions are set with the defines LEFTPOS, RIGHTPOS, MIDPOS etc.
   switch (pos) {
     case 0: sortServo.write(sortLeftPos); break;
     case 1: sortServo.write(sortMidPos); break;

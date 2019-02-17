@@ -1,9 +1,9 @@
-/*
+/*What the file is about
  */
 #ifndef NAME_H
 #define NAME_H
 
-//Includes + any other includes you need
+//Includes
 #include "Arduino.h"
 
 //Variable Declarations

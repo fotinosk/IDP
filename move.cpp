@@ -1,12 +1,11 @@
-//Only include move.h
 #include "move.h"
 
 //Variable Definitions
-Adafruit_MotorShield motorShield = Adafruit_MotorShield();//
+Adafruit_MotorShield motorShield = Adafruit_MotorShield();
 Adafruit_DCMotor *motorRight;
 Adafruit_DCMotor *motorLeft;
-float rTune = 1;
-float lTune = 0.974; //this was almost perfectly straighta fter caster adjustment on thursday
+float rTune = 1; //tune motor powers
+float lTune = 0.974;
 bool spinDirection [2] = {1,1};
 
 //Function Definitions
@@ -17,54 +16,55 @@ void initMove() {
   return;
 }
 
-//low level movement function literally for spinning the wheels.
+//low level movement function spins wheels and normalises power from 0-255 to -100 - 100
 void spinWheels(int16_t lspd, int16_t rspd) {
   motorRight->setSpeed((int16_t) abs(rspd)*255/100*rTune);
   motorLeft->setSpeed((int16_t) abs(lspd)*255/100*lTune);
   motorRight->run(rspd>=0 ? FORWARD : BACKWARD);
   motorLeft->run(lspd>=0 ? FORWARD : BACKWARD);
-  spinDirection[0] = lspd >= 0;
+  spinDirection[0] = lspd >= 0; //used for encoder tracking
   spinDirection[1] = rspd >= 0;
 }
 
-//higher level movement function with its own loop
+/*The main movement function to be used.
+ * 'lspd' and 'rspd' control motor power,
+ * 'until' defines the stopping condition for this movement
+ * 'duration' is the magnitude for quantitative stopping conditions - time in ms or distance in mm depending on 'until'
+ * 'flapDelay' is the period the flap should move back and forth at. 0 is no movement and in the centre position
+ */
 bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, uint16_t flapDelay) {
-  amberLED(abs(lspd)+abs(rspd)!=0?ON:OFF);
-  if (until == TIMER)
+  amberLED(abs(lspd)+abs(rspd)!=0?ON:OFF); //if moving turn on amber light
+  if (until == TIMER) //if using TIMER as stopping condition start timing
     moveTimer(SET, duration);
-  encoderRun(RESET);
+  encoderRun(RESET); //reset the value of the encoder
 
   bool blockDetected = false;
   bool magnetDetected = false;
   int32_t currentEncoderCount;
-  // the actual going forward loop
+  //The loop which continues until stopping condtion is met.
   while(true) {
-    //count the encoder
+    //Let encoder check if colour has changed
     encoderRun(RUN);
 
-    Serial.print(encoderCount[0]); Serial.print("  "); Serial.println(encoderCount[1]);
-    // move flap when block is not detected. We don't want to accidently push away the block when it is detected
+    // move flap at period of flapDelay when block is not detected. We don't want to accidently push away the block when it is detected
     if(!blockDetected){
-      flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS); //Flap back and forth at flapDelay unless its 0 so it goes middle
-    } 
-    if(blockDetected) {
+      flapDelay ? flapSet(millis()%(2*flapDelay)>flapDelay ? LEFTPOS : RIGHTPOS) : flapSet(MIDPOS);
+    }
+    else if(blockDetected) {
       flapSet(millis()%(2*300)>300 ? LEFTPOS : RIGHTPOS);
     }
-    //different checks and analyses i.e. a block or end condition met
 
-    /*
-     * BLOCK DETCTION SEQUENCE
-     */
+    /* BLOCK DETECTION SEQUENCE  */
     if (irSensor() && !blockDetected){
       blockDetected = true;
-      enableHallSensor(); 
+      enableHallSensor();
       if (hallSensor())
         magnetDetected = true;
       currentEncoderCount = encoderCount[0];
     }
-    
-    // move a bit forward after block detected 
-    if(blockDetected && abs(encoderCount[0] - currentEncoderCount)>=2) { // was 30
+
+    // move a bit forward after block detected
+    if(blockDetected && abs(encoderCount[0] - currentEncoderCount)>=2) {
       analyseBlock(magnetDetected);
       magnetDetected = false;
       blockDetected = false;
@@ -73,13 +73,12 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     else if(blockDetected && hallSensor()) {
       magnetDetected = true;
     }
-    /*
-     * STOPPING CONDITIONS
-     */
+
+    /* STOPPING CONDITIONS */
     //determine if conditions for stopping are met
     if (until == WALL && (switchFrontBoth() || switchBackBoth()))
-      return until == WALL; //if we hit a wall unintentionaly we need to deal with it => return an error flag - might make this an int later to detect other possible sources of going wrong ie crossing the red line when we don't want to
-    if (until == DISTANCE) { 
+      return until == WALL; //if we hit a wall unintentionally return false so we can check this and implement correction
+    if (until == DISTANCE) {
       if (abs((encoderCount[0] + encoderCount[1])/2)*mmPerEncoder >= duration)//encoder counts are averaged to give central distance
         break;
     }
@@ -88,17 +87,16 @@ bool moveWheels(int16_t lspd, int16_t rspd, uint8_t until, uint32_t duration, ui
     if (until == LINE && lineSensor())
       break;
 
-      
     //perform movement
     spinWheels(lspd, rspd);
   }
-  amberLED(OFF);
+  amberLED(OFF); //turn off amber light again
   return true;
 }
-//high level movement fucntions
 
-void turnCorner(bool dir) { //might need to use timer to flap paddle really fast if blocks not held in
-  //set flap & gate to blocking
+/*High level movement funcitons - descriptions in the header file for what these do*/
+
+void turnCorner(bool dir) {
   spinWheels(0,0);
   delay(200);
   flapSet(MIDPOS);
@@ -108,13 +106,13 @@ void turnCorner(bool dir) { //might need to use timer to flap paddle really fast
     case RIGHTTURN: spinWheels(100, -30); break; //to actually turn, this needs fine tuning
     case LEFTTURN: spinWheels(-30, 100); break;
   }
-  delay(1150); //700
+  delay(1150);
   spinWheels(100, 100); //so blocks are pushed back again.
-  delay(150); //500
+  delay(150);
   return;
 }
 
-void turn90(bool dir) { //this function is for turning in open space when we don't have the wall to guide us.
+void turn90(bool dir) { //when we are turning the last corner after the last sweep of the field and don't want to get stuck in the top right corner
  moveWheels(dir? -80 : -83 ,dir? -83: -80, DISTANCE, 180, 0);// back slightly.  if dir== (RIGHTTURN = TRUE)
  moveWheels(dir? 70 :0, dir?0:70, DISTANCE, 130, 0); //turn   - if dir== (RIGHTTURN = TRUE)
  delay(1000);
@@ -125,7 +123,6 @@ void turn90(bool dir) { //this function is for turning in open space when we don
     break;
   }
  }
- //moveWheels(-100,-100, TIMER, , 0); //get on the wall
  delay(500);
  resetJam();
  return;
@@ -170,27 +167,24 @@ void turnAround (bool dir) {
     }
 
   }
-  
+
   spinWheels(-100,-100);
   delay(400);
   resetJam();
   return;
 
-}//add little backward movment for if magnetic
 
 void analyseBlock(bool alreadyMagnetic) {
   bool magnetic = alreadyMagnetic;
   spinWheels(0,0);
   flapSet(MIDPOS);
-  delay(200); // <-- WE DEF NEED THIS DELAY!! JUST KEEEEEEP ITTTTT
+  delay(200);
   //move 1 cm and test for magnetism in this time
-//
-  
-  magnetTimer(SET, 220); // was 200
+  magnetTimer(SET, 220);
   spinWheels(30,30);
   while (magnetTimer(READ, 0)) { //while magnet timer is set
     if (switchFrontBoth()) {
-      moveWheels(-10, -10, TIMER, 600, 0); //or some other emergency maneuver
+      moveWheels(-10, -10, TIMER, 600, 0);
     }
     encoderRun(RUN);
     if (hallSensor())
@@ -201,8 +195,8 @@ void analyseBlock(bool alreadyMagnetic) {
 
   //move the flap and move to process block
   sortSet(magnetic ? RIGHTPOS : LEFTPOS);
-  delay(200);  // 200
-  magnetMoveTimer(SET, 350); //move enough to put block in storage - changed from 450 to 350 to hopefully prevent jamming
+  delay(200);
+  magnetMoveTimer(SET, 350); //move enough to put block in storage
   while(magnetMoveTimer(READ, 0)){
     if (hallSensor() && !magnetic){ //if late magnetic detection
       magnetMoveTimer(PAUSE, 0);
@@ -223,22 +217,21 @@ void analyseBlock(bool alreadyMagnetic) {
   return;
 }
 
-
 void stopMotors(int mseconds) {
   spinWheels(0,0);
   delay(mseconds);
 }
 
 void resetJam() {
-  flapSet(MIDPOS); // NEW STUFF
-  sortSet(LEFTPOS); // NEW STUFF
+  flapSet(MIDPOS);
+  sortSet(LEFTPOS);
   while(switchBackBoth()){
   spinWheels(60,60);
   }
   delay(100);
-  moveWheels(80,80, DISTANCE, 30, 0); // NEW STUFF
+  moveWheels(80,80, DISTANCE, 30, 0);
   sortSet(RIGHTPOS);
-  moveWheels(80,80, DISTANCE, 30, 0); // NEW STUFF
+  moveWheels(80,80, DISTANCE, 30, 0);
   sortSet(MIDPOS);
 }
 

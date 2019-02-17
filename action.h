@@ -1,13 +1,12 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-//Includes + any other includes you need
 #include "Arduino.h"
 #include "Servo.h"
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 
-//flap and gate positions
+//Flap and gate positions and LED state defines
 #define LEFTPOS 0
 #define MIDPOS 1
 #define RIGHTPOS 2
@@ -35,7 +34,7 @@ extern uint8_t enableHallSensorPin;
 
 //Function Definitions
 void initAction();
-//Gates and servos
+//Servos and Slider
 void flapSet(uint8_t pos);
 void sortSet(uint8_t pos);
 void openSlider();
@@ -43,7 +42,7 @@ void closeSlider();
 void enableHallSensor();
 void disableHallSensor();
 
-//Block carrying light
+//Controllable lights
 void redLED(bool state);
 void amberLED(bool state);
 

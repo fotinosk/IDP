@@ -1,4 +1,6 @@
-/* 
+/*DIDN'T END UP USING THIS IN THE END*/
+
+/*
 This is an example of how you would do a proportional + derivative drive.
 Integral control is usually not needed because at this level you're not
 really affected by the steady state error. And it's more painful
@@ -13,20 +15,20 @@ to incorporate it in code
 int desired 980 // the desired value of the line sensor
 int basePower 50 // base power for the motor
 
-int error=0, prevError=0, errorDifference, correctionPower; 
+int error=0, prevError=0, errorDifference, correctionPower;
 while(true) {
 	errorDifference = error - prevError;
 	error = analogRead(rightLineSensorPin) - desired;
-	
+
 	correctionPower = Kp*error + Kd*errorDifference;
 
-	if(error >= 0) { 
+	if(error >= 0) {
 		spinWheels(basePower, basePower + correctionPower);
 	}
 	else {
 		spinWheels(basePower + correctionPower, basePower);
 	}
-	
+
 	prevError = error;
 }
 

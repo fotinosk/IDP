@@ -1,19 +1,18 @@
-//Include
 #include "sense.h"
 
 //Variable Definitions
-//int color;
 uint8_t switchFrontLeftPin = 3;
 uint8_t switchFrontRightPin = 2;
 uint8_t switchBackLeftPin = 5;
 uint8_t switchBackRightPin = 4;
 uint8_t hallSensorPin = 6;
-uint8_t irSensorPin = 11;//=
-uint8_t leftEncoderPin = 14;//=
-uint8_t rightEncoderPin = 15;//=
+uint8_t irSensorPin = 11;
+uint8_t leftEncoderPin = 14;
+uint8_t rightEncoderPin = 15;
 uint8_t rightLineSensorPin = 13;
 float mmPerEncoder = 9.48;
 
+//global variable for the encoder and the thresholds for each wheel
 int32_t encoderCount [2] = {0,0};
 uint16_t encoderThreshold[2][2] = {{66,52},{65,55}};
 
@@ -26,16 +25,17 @@ void initSense() {
   pinMode(switchFrontRightPin, INPUT);
   pinMode(hallSensorPin, INPUT);
   pinMode(irSensorPin, INPUT);
-  //pinMode(leftEncoderPin, INPUT);
-  //pinMode(rightEncoderPin, INPUT);
+  pinMode(leftEncoderPin, INPUT);
+  pinMode(rightEncoderPin, INPUT);
   return;
 }
 
+/*-Reading the state of the microswitches. True = pressed in-*/
 bool switchFrontLeft() {
   return !digitalRead(switchFrontLeftPin);
 }
 bool switchFrontRight() {
-  return !digitalRead(switchFrontRightPin); 
+  return !digitalRead(switchFrontRightPin);
 }
 bool switchBackLeft() {
   return !digitalRead(switchBackLeftPin);
@@ -80,13 +80,13 @@ void encoderRun(uint8_t action) {
 }
 
 bool lineSensor() {
-  return analogRead(rightLineSensorPin) < 980; // then it detects a line
+  return analogRead(rightLineSensorPin) < 980; // then it detects a line. i.e. not black
 }
 
-bool hallSensor() {
+bool hallSensor() { //used for detecting magnetism in blocks
   return !digitalRead(hallSensorPin);
 }
 
-bool irSensor() {
+bool irSensor() { //used for detecting presence of blocks
   return digitalRead(irSensorPin);
 }
